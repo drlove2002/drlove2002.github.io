@@ -35,7 +35,7 @@ export default function NotFound() {
         Nothing here.
       </h1>
       <p style={{ color: 'var(--muted)', maxWidth: '400px', lineHeight: '1.7' }}>
-        That page doesn't exist. Probably a bad link, or you found a gap in the
+        That page doesn&apos;t exist. Probably a bad link, or you found a gap in the
         architecture.
       </p>
       <Link

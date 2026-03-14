@@ -40,11 +40,8 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Build
+        # discord.ts uses the public invite API — no credentials needed
         run: pnpm build
-        env:
-          # Provide Discord API token if available so live stats are fetched at build time
-          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
-          DISCORD_GUILD_ID: ${{ secrets.DISCORD_GUILD_ID }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
