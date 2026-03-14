@@ -74,7 +74,7 @@ export default async function WorldwidePage() {
       </div>
 
       <div className={styles.btnRow}>
-        <a href="https://discord.gg/SJy8dnMh" className={styles.btnGhost}>🎮 Visit Server ↗</a>
+        <a href="https://discord.gg/worldwide" className={styles.btnGhost}>🎮 Visit Server ↗</a>
         <a href="https://worldwide-dc.com/" className={styles.btnGhost}>📊 Live Dashboard ↗</a>
       </div>
 

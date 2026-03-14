@@ -42,7 +42,7 @@ function getContacts(memberCount: string): Contact[] {
     {
       type: 'Discord Community',
       value: 'Worldwide Server',
-      href: 'https://discord.gg/SJy8dnMh',
+      href: 'https://discord.gg/worldwide',
       icon: FiMessageCircle,
       color: '#7289da',
       note: `${memberCount}+ members. The thing this portfolio is about.`,

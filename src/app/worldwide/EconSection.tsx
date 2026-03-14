@@ -23,16 +23,14 @@ const economyCards: EconItem[] = [
       'Seasonal events designed with net-negative currency impact',
     ],
     accent: '#e87c3a',
+    // Balance scale — equilibrium of supply and demand
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <line x1="12" y1="4" x2="12" y2="18" />
-        <line x1="5" y1="8" x2="12" y2="5" />
-        <line x1="19" y1="8" x2="12" y2="5" />
-        <line x1="5" y1="8" x2="5" y2="13" />
-        <line x1="19" y1="8" x2="19" y2="13" />
-        <path d="M3 13 L5 13 L7 13" />
-        <path d="M17 13 L19 13 L21 13" />
-        <line x1="8" y1="18" x2="16" y2="18" />
+        <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+        <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+        <path d="M7 21h10" />
+        <path d="M12 3v18" />
+        <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" />
       </svg>
     ),
   },
@@ -46,14 +44,11 @@ const economyCards: EconItem[] = [
       'Honeypot items and trade routes designed to catch exploit scripts',
     ],
     accent: '#3ae8b4',
+    // Shield — protection and security against exploits
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="8" />
-        <line x1="12" y1="2" x2="12" y2="6" />
-        <line x1="12" y1="18" x2="12" y2="22" />
-        <line x1="2" y1="12" x2="6" y2="12" />
-        <line x1="18" y1="12" x2="22" y2="12" />
-        <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" />
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <path d="m9 12 2 2 4-4" />
       </svg>
     ),
   },
@@ -67,15 +62,11 @@ const economyCards: EconItem[] = [
       'Cooldown timers create artificial scarcity and anticipation loops',
     ],
     accent: '#c084fc',
+    // Brain — behavioral psychology and decision-making
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M4 15 L8 4 L12 15" />
-        <line x1="5.5" y1="11" x2="10.5" y2="11" />
-        <path d="M14 15 L18 4 L22 15" />
-        <line x1="15.5" y1="11" x2="20.5" y2="11" />
-        <line x1="2" y1="20" x2="12" y2="20" />
-        <line x1="12" y1="20" x2="22" y2="20" />
-        <circle cx="12" cy="20" r="1.5" fill="currentColor" stroke="none" />
+        <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.66Z" />
+        <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-1.66Z" />
       </svg>
     ),
   },
@@ -89,12 +80,12 @@ const economyCards: EconItem[] = [
       'Instant delivery with automatic retry and manual override for edge cases',
     ],
     accent: '#facc15',
+    // Coin with dollar sign — real-money transactions
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M4 4 L4 20" />
-        <path d="M4 4 L14 4 Q19 4 19 8 Q19 12 14 12 L4 12" />
-        <path d="M4 12 L16 12 Q21 12 21 16 Q21 20 16 20 L4 20" />
-        <line x1="2" y1="2" x2="2" y2="22" opacity="0.3" />
+        <circle cx="12" cy="12" r="9" />
+        <path d="M14.8 9A2 2 0 0 0 13 8h-2a2 2 0 0 0 0 4h2a2 2 0 0 1 0 4h-2a2 2 0 0 1-1.8-1" />
+        <path d="M12 6v2m0 8v2" />
       </svg>
     ),
   },
@@ -118,9 +109,6 @@ export default function EconSection() {
           >
             {/* Accent top line */}
             <div className={styles.topLine} />
-
-            {/* Background icon */}
-            <div className={styles.bgIcon}>{card.icon}</div>
 
             <div className={styles.inner}>
               <div className={styles.header}>

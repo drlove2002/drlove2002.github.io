@@ -18,7 +18,7 @@ CI/CD: push to `main` → GitHub Actions builds & deploys to GitHub Pages.
 - [ ] Verify OG image appears correctly on Discord / Twitter / LinkedIn after deploying PNG
 - [ ] Confirm sitemap is submitted and indexed in Google Search Console
 - [ ] Test hamburger nav on a real mobile device (iOS Safari, Android Chrome)
-- [ ] Verify Discord invite link `https://discord.gg/SJy8dnMh` is still active
+- [ ] Verify Discord invite link `https://discord.gg/worldwide` is still active
 
 ## Known issues / notes
 
