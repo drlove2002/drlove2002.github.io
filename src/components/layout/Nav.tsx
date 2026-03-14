@@ -9,7 +9,6 @@ const links = [
   { href: '/', label: 'Home' },
   { href: '/worldwide', label: 'Worldwide' },
   { href: '/writing', label: 'Writing' },
-  { href: '/#contact', label: 'Contact' },
 ]
 
 export default function Nav() {
@@ -27,7 +26,7 @@ export default function Nav() {
 
   function isActive(href: string) {
     if (href === '/') return pathname === '/'
-    return pathname.startsWith(href.replace('/#contact', ''))
+    return pathname.startsWith(href)
   }
 
   return (
