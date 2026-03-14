@@ -1,0 +1,45 @@
+.chip {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  white-space: nowrap;
+  transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+  cursor: default;
+}
+
+.chip[title]:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* Variants */
+.python {
+  color: #5b9bd5;
+  border-color: rgba(53, 114, 165, 0.35);
+  background: rgba(53, 114, 165, 0.06);
+}
+
+.rust {
+  color: #e05c20;
+  border-color: rgba(183, 65, 14, 0.35);
+  background: rgba(183, 65, 14, 0.06);
+}
+
+.next {
+  color: var(--text);
+  border-color: rgba(232, 228, 220, 0.2);
+  background: rgba(232, 228, 220, 0.04);
+}
+
+.db {
+  color: var(--accent2);
+  border-color: rgba(58, 232, 180, 0.25);
+  background: rgba(58, 232, 180, 0.04);
+}
