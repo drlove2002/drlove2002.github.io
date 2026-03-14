@@ -1,0 +1,75 @@
+---
+title: "How I Supercharged My gRPC IPC with UNIX Domain Sockets"
+description: "Replacing TCP localhost with UNIX sockets for 60-70% latency reduction — benchmarks, code, and gotchas."
+tag: "Systems"
+date: "2025-06-27"
+---
+
+I run three services on a single machine: Python (Discord bot), Rust (database/cache engine), and TypeScript/Node.js (web dashboard). They talk to each other over gRPC. For months, that meant TCP on `localhost:50051`.
+
+Then I discovered UNIX domain sockets — and the performance jump was absurd.
+
+## The Problem with TCP on Localhost
+
+gRPC is awesome — protobufs, auto-generated stubs, cross-language love. But even on `127.0.0.1`, TCP carries unnecessary overhead:
+
+- IP headers and checksums
+- Congestion control algorithms
+- Full networking stack traversal
+
+For frequent RPC calls between co-located services, this overhead adds up. Every microsecond matters when you're processing thousands of economy transactions per minute.
+
+## The Fix: UNIX Domain Sockets
+
+UNIX domain sockets bypass the IP/TCP networking stack entirely. They use in-kernel buffers with potential zero-copy operations, reducing syscalls and context switches. The data never touches the network layer — it stays in kernel memory.
+
+The code change is trivial. Replace your TCP address with a socket path:
+
+**Server:**
+
+```python
+server.add_insecure_port('unix:/tmp/my_grpc.sock')
+```
+
+**Client:**
+
+```python
+channel = grpc.insecure_channel('unix:/tmp/my_grpc.sock')
+```
+
+Same pattern works in Rust, Go, C++, and Java. Swap `localhost:50051` for `unix:/path/to.sock` and you're done.
+
+## Benchmarks
+
+Real numbers from my production setup:
+
+| RPC Method      | TCP (localhost) | UNIX Socket | Improvement |
+|-----------------|-----------------|-------------|-------------|
+| `GetUserData()` | 80 µs           | 25 µs       | ~69%        |
+| `CacheFetch()`  | 65 µs           | 20 µs       | ~69%        |
+| `MetricsReport()` | 120 µs        | 35 µs       | ~71%        |
+
+**60-70% latency reduction** with lower CPU consumption. For a one-line code change.
+
+## Gotchas
+
+A few things I learned the hard way:
+
+- **Local only.** UNIX sockets can't cross machine boundaries. All my services run on a single instance, so this works. For distributed systems, you still need TCP (or something like Envoy with mTLS).
+
+- **Socket file cleanup.** If your server crashes, the `.sock` file lingers. Next startup fails with "address already in use." You need to `unlink` the old socket file before binding:
+
+```python
+import os
+sock_path = '/tmp/my_grpc.sock'
+if os.path.exists(sock_path):
+    os.unlink(sock_path)
+```
+
+- **Path length limit.** UNIX socket paths are limited to ~108 characters. Keep your paths short — `/tmp/my_grpc.sock`, not `/var/run/my-very-long-application-name/grpc-communication.sock`.
+
+## When to Use This
+
+If you're running gRPC (or any IPC) between services on the same machine, switch to UNIX domain sockets. The performance gain is massive, the code change is minimal, and there's no downside for local communication.
+
+The only reason not to: if you plan to distribute those services across machines later. Even then, you can abstract the transport and switch at deployment time.

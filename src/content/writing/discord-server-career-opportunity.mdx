@@ -1,0 +1,57 @@
+---
+title: "How I Turned a Discord Server into a Career-Changing Opportunity"
+description: "From clicking 'Join Server' to building a distributed system for 50,000 users — the origin story of Worldwide."
+tag: "Essay"
+date: "2024-04-05"
+---
+
+It was just a simple click that changed the course of my career. I had no idea that joining a Discord server called "Worldwide" would lead me on a journey of personal and professional growth.
+
+## The Humble Beginnings
+
+The server was owned by someone named Flame. As a software developer — albeit a very junior one — I started offering feedback on the server's instructions and features. Small stuff. UI suggestions, workflow ideas.
+
+Then Flame asked a question that changed everything: *"Can you develop a bot for this server?"*
+
+I was hesitant. I was a Python beginner. I'd built toy scripts, not production software. But I said yes anyway — partly because I was curious, partly because I didn't know enough to be properly scared.
+
+## Diving into the Unknown
+
+The first version stored the entire economy in a JSON file. Members earned coins for sending messages. It was simple, fragile, and crashed constantly. Every time the file got too big or two writes collided, the whole system went down.
+
+That's when I learned my first real lesson: **your storage layer is your foundation, and JSON files aren't a foundation.**
+
+I migrated to MongoDB. Learned about documents, indexes, sharded clusters. The bot stopped crashing. The economy started growing. And I started realizing this wasn't a toy project anymore.
+
+## Embracing New Technologies
+
+Each problem led to a new technology:
+
+- **Redis** — when MongoDB couldn't keep up with the read/write frequency of economy transactions, I added Redis as a caching layer. Hot data in memory, cold data in Mongo.
+
+- **KeyDB** — a Redis fork that offered better performance and multithreading. I switched when Redis's single-threaded model became a bottleneck.
+
+- **Custom Rust cache** — eventually I wanted more control than any off-the-shelf solution gave me. I wrote my own cache layer in Rust, optimized for our specific access patterns.
+
+- **Cloud migration** — started on DigitalOcean, hit Discord API rate limits, moved to AWS for better networking and infra control.
+
+- **Rust data access layer** — the biggest architectural leap. I built a dedicated Rust service connected via gRPC that handled all database communication. Python stayed as the Discord-facing layer; Rust handled everything performance-critical.
+
+## Unlocking New Possibilities
+
+What started as a simple bot evolved into a complex, multi-faceted platform: a virtual economy with donation-based currency, games, moderation tools, and a planned web dashboard. The server grew to 50,000 members.
+
+## What I Actually Learned
+
+This project didn't just teach me technologies. It taught me:
+
+- **How real users break things** — in ways no test suite would catch
+- **How to make architectural decisions under pressure** — when the bot is down and 50,000 people are waiting
+- **How to learn just enough of something to ship** — and come back later to learn it properly
+- **How side projects can outgrow your expectations** — if you keep showing up
+
+---
+
+The point isn't that everyone should build a Discord bot. The point is that the best opportunities often don't look like opportunities when they start. They look like someone asking if you can build something you're not sure you can build.
+
+Say yes anyway.
