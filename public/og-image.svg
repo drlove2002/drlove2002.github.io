@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+
+  <!-- Subtle grid lines -->
+  <line x1="0" y1="1" x2="1200" y2="1" stroke="#2a2a2a" stroke-width="1"/>
+  <line x1="0" y1="629" x2="1200" y2="629" stroke="#2a2a2a" stroke-width="1"/>
+
+  <!-- Left accent bar -->
+  <rect x="80" y="160" width="3" height="300" fill="#e87c3a" opacity="0.6"/>
+
+  <!-- Eyebrow label -->
+  <text x="104" y="192" font-family="monospace" font-size="14" fill="#e87c3a" letter-spacing="3" text-transform="uppercase">SUDIP ROY · DRLOVE</text>
+
+  <!-- Main heading -->
+  <text x="104" y="290" font-family="monospace" font-weight="700" font-size="72" fill="#e8e4dc" letter-spacing="-1">I build systems</text>
+  <text x="104" y="370" font-family="monospace" font-weight="700" font-size="72" fill="#888888" letter-spacing="-1">people live inside.</text>
+
+  <!-- Tagline -->
+  <text x="104" y="436" font-family="serif" font-size="22" fill="#b0aba3">Systems engineer · West Bengal, India</text>
+
+  <!-- Stats row -->
+  <text x="104" y="510" font-family="monospace" font-size="16" fill="#e87c3a">50k+</text>
+  <text x="104" y="530" font-family="monospace" font-size="11" fill="#666666">Server Members</text>
+
+  <line x1="220" y1="498" x2="220" y2="538" stroke="#2a2a2a" stroke-width="1"/>
+
+  <text x="240" y="510" font-family="monospace" font-size="16" fill="#e87c3a">5 yrs</text>
+  <text x="240" y="530" font-family="monospace" font-size="11" fill="#666666">In Production</text>
+
+  <line x1="380" y1="498" x2="380" y2="538" stroke="#2a2a2a" stroke-width="1"/>
+
+  <text x="400" y="510" font-family="monospace" font-size="16" fill="#e87c3a">6</text>
+  <text x="400" y="530" font-family="monospace" font-size="11" fill="#666666">Database Systems</text>
+
+  <!-- Domain -->
+  <text x="1120" y="530" font-family="monospace" font-size="15" fill="#e87c3a" text-anchor="end">drlove.dev</text>
+
+  <!-- Decorative corner accent -->
+  <circle cx="1120" cy="160" r="200" fill="#e87c3a" fill-opacity="0.04"/>
+  <circle cx="1120" cy="160" r="120" fill="#e87c3a" fill-opacity="0.04"/>
+</svg>
