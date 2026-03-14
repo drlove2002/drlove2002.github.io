@@ -1,0 +1,196 @@
+/* ─── Economy Section Grid ──────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Card ──────────────────────────────────────────────────────────── */
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.card:hover {
+  background: var(--surface2);
+  border-color: color-mix(in srgb, var(--card-accent) 35%, transparent);
+  box-shadow:
+    0 0 20px color-mix(in srgb, var(--card-accent) 15%, transparent),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.cardExpanded {
+  border-color: color-mix(in srgb, var(--card-accent) 45%, transparent);
+  box-shadow:
+    0 0 32px color-mix(in srgb, var(--card-accent) 20%, transparent),
+    0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Top accent line */
+.topLine {
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--card-accent) 0%,
+    transparent 80%
+  );
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .topLine {
+  opacity: 1;
+}
+
+/* ─── Background icon (large faded) ────────────────────────────────── */
+.bgIcon {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 80px;
+  height: 80px;
+  color: var(--card-accent);
+  opacity: 0.06;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.bgIcon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.card:hover .bgIcon {
+  opacity: 0.12;
+}
+
+/* ─── Inner content ────────────────────────────────────────────────── */
+.inner {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--card-accent);
+}
+
+.iconSmall {
+  width: 28px;
+  height: 28px;
+  color: var(--card-accent);
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.iconSmall > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.card:hover .iconSmall {
+  opacity: 0.8;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin: 0;
+}
+
+.body {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ─── Expanded details ─────────────────────────────────────────────── */
+.details {
+  overflow: hidden;
+}
+
+.detailsDivider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--card-accent) 50%,
+    transparent 100%
+  );
+  opacity: 0.2;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.detailsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detailsList li {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  padding-left: 0.9rem;
+  position: relative;
+}
+
+.detailsList li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--card-accent);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+/* ─── Expand hint ──────────────────────────────────────────────────── */
+.expandHint {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+
+.expandArrow {
+  display: inline-block;
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+}
+
+.card:hover .expandArrow {
+  opacity: 1;
+  color: var(--card-accent);
+}

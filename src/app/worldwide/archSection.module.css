@@ -1,0 +1,374 @@
+/* ─── Architecture Section ──────────────────────────────────────────── */
+.wrapper {
+  margin-top: 1.5rem;
+}
+
+/* ─── Card grid ────────────────────────────────────────────────────── */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Individual card ──────────────────────────────────────────────── */
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+}
+
+.card:hover {
+  border-color: color-mix(in srgb, var(--lang-color) 40%, transparent);
+  box-shadow:
+    0 0 24px var(--glow-color, rgba(232, 124, 58, 0.15)),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Top accent gradient bar */
+.accentBar {
+  height: 3px;
+  background: linear-gradient(90deg, var(--lang-color, var(--accent)) 0%, transparent 100%);
+}
+
+/* ─── Icon watermark ───────────────────────────────────────────────── */
+.iconWatermark {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 120px;
+  height: 120px;
+  color: var(--lang-color, var(--accent));
+  opacity: 0.04;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconWatermark > svg { width: 100%; height: 100%; }
+
+.card:hover .iconWatermark { opacity: 0.08; }
+
+/* ─── Card content ─────────────────────────────────────────────────── */
+.cardContent {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.iconCircle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--lang-color) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lang-color) 25%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lang-color);
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover .iconCircle {
+  background: color-mix(in srgb, var(--lang-color) 18%, transparent);
+  box-shadow: 0 0 16px var(--glow-color);
+}
+
+.langName {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--lang-color, var(--text));
+  line-height: 1.2;
+  margin: 0;
+}
+
+.roleName {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ─── Tags ─────────────────────────────────────────────────────────── */
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 0.22rem 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.tag_python {
+  color: #5b9bd5;
+  border-color: rgba(53, 114, 165, 0.35);
+  background: rgba(53, 114, 165, 0.06);
+}
+
+.tag_rust {
+  color: #e05c20;
+  border-color: rgba(183, 65, 14, 0.35);
+  background: rgba(183, 65, 14, 0.06);
+}
+
+.tag_next {
+  color: var(--text);
+  border-color: rgba(232, 228, 220, 0.2);
+  background: rgba(232, 228, 220, 0.04);
+}
+
+.tag_db {
+  color: var(--accent2);
+  border-color: rgba(58, 232, 180, 0.25);
+  background: rgba(58, 232, 180, 0.04);
+}
+
+/* ─── Expand hint ──────────────────────────────────────────────────── */
+.expandHint {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.expandLabel {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.card:hover .expandLabel {
+  opacity: 1;
+  color: var(--lang-color);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   NODE GRAPH — Connection diagram below cards
+   ═══════════════════════════════════════════════════════════════════════ */
+.nodeGraph {
+  margin-top: 1.75rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+  overflow: hidden;
+}
+
+.nodeSvg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .nodeGraph {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   POPUP MODAL (rendered via portal on document.body)
+   ═══════════════════════════════════════════════════════════════════════ */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 9998;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: min(560px, 92vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--lang-color) 40%, transparent);
+  border-radius: var(--radius-md);
+  z-index: 9999;
+  box-shadow:
+    0 0 60px var(--glow-color, rgba(232, 124, 58, 0.2)),
+    0 24px 80px rgba(0, 0, 0, 0.6);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  z-index: 10;
+}
+
+.closeBtn:hover {
+  border-color: var(--lang-color);
+  color: var(--lang-color);
+}
+
+.modalAccent {
+  height: 3px;
+  background: linear-gradient(90deg, var(--lang-color, var(--accent)) 0%, transparent 100%);
+}
+
+.modalIconWatermark {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 180px;
+  height: 180px;
+  color: var(--lang-color);
+  opacity: 0.04;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalIconWatermark > svg { width: 100%; height: 100%; }
+
+.modalContent {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modalIconCircle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--lang-color) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lang-color) 30%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lang-color);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px var(--glow-color);
+}
+
+.modalLang {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--lang-color, var(--text));
+  line-height: 1.2;
+  margin: 0;
+}
+
+.modalRole {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.modalDesc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* ─── Details in modal ─────────────────────────────────────────────── */
+.detailsDivider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--lang-color) 50%, transparent 100%);
+  opacity: 0.25;
+  margin: 0.25rem 0;
+}
+
+.detailsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.detailsList li {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.detailsList li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--lang-color, var(--accent));
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1rem;
+}
