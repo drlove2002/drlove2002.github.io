@@ -6,8 +6,9 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true, // required for static export
   },
-  // Disable x-powered-by header
   poweredByHeader: false,
+  // Allow LAN access during development (e.g. testing on phone)
+  allowedDevOrigins: ['192.168.1.0/24'],
 }
 
 export default nextConfig
