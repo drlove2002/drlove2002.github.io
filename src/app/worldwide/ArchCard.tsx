@@ -1,6 +1,7 @@
 'use client'
 
-import { useMotionValue, useTransform, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
+import { use3DTilt } from '@/hooks/use3DTilt'
 import styles from './worldwide.module.css'
 
 interface ArchCardProps {
@@ -14,35 +15,21 @@ interface ArchCardProps {
 }
 
 export default function ArchCard({ lang, role, langColor, glowColor, desc, why, icon }: ArchCardProps) {
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const rotateX = useTransform(y, [-0.5, 0.5], [10, -10])
-  const rotateY = useTransform(x, [-0.5, 0.5], [-10, 10])
-
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const r = e.currentTarget.getBoundingClientRect()
-    x.set((e.clientX - r.left) / r.width - 0.5)
-    y.set((e.clientY - r.top) / r.height - 0.5)
-  }
-
-  function handleMouseLeave() {
-    x.set(0)
-    y.set(0)
-  }
+  const { rotateX, rotateY, onMouseMove, onMouseLeave } = use3DTilt(10)
 
   return (
-    <div style={{ perspective: '900px' }}>
-      <motion.div
+    <motion.div
         className={styles.archCard}
         style={{
           rotateX,
           rotateY,
+          perspective: '900px',
           transformStyle: 'preserve-3d',
           '--lang-color': langColor,
           '--glow-color': glowColor,
         } as React.CSSProperties}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
         whileHover={{ scale: 1.03 }}
         transition={{ type: 'spring', stiffness: 280, damping: 28 }}
       >
@@ -59,6 +46,5 @@ export default function ArchCard({ lang, role, langColor, glowColor, desc, why, 
           </div>
         </div>
       </motion.div>
-    </div>
   )
 }

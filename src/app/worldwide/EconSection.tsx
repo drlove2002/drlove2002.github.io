@@ -144,7 +144,7 @@ export default function EconSection() {
                     <ul className={styles.detailsList}>
                       {card.details.map((d, j) => (
                         <motion.li
-                          key={j}
+                          key={d}
                           initial={{ opacity: 0, x: -8 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: j * 0.06, ease: 'easeOut' as const }}

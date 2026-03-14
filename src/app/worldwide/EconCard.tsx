@@ -1,6 +1,7 @@
 'use client'
 
-import { useMotionValue, useTransform, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
+import { use3DTilt } from '@/hooks/use3DTilt'
 import styles from './worldwide.module.css'
 
 interface EconCardProps {
@@ -11,29 +12,14 @@ interface EconCardProps {
 }
 
 export default function EconCard({ index, title, body, icon }: EconCardProps) {
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const rotateX = useTransform(y, [-0.5, 0.5], [8, -8])
-  const rotateY = useTransform(x, [-0.5, 0.5], [-8, 8])
-
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const r = e.currentTarget.getBoundingClientRect()
-    x.set((e.clientX - r.left) / r.width - 0.5)
-    y.set((e.clientY - r.top) / r.height - 0.5)
-  }
-
-  function handleMouseLeave() {
-    x.set(0)
-    y.set(0)
-  }
+  const { rotateX, rotateY, onMouseMove, onMouseLeave } = use3DTilt(8)
 
   return (
-    <div style={{ perspective: '900px' }}>
-      <motion.div
+    <motion.div
         className={styles.econCard}
-        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        style={{ rotateX, rotateY, perspective: '900px', transformStyle: 'preserve-3d' }}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
         whileHover={{ scale: 1.02 }}
         transition={{ type: 'spring', stiffness: 280, damping: 28 }}
       >
@@ -45,6 +31,5 @@ export default function EconCard({ index, title, body, icon }: EconCardProps) {
           <p className={styles.econCardBody}>{body}</p>
         </div>
       </motion.div>
-    </div>
   )
 }
