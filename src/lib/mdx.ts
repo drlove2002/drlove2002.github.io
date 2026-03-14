@@ -27,6 +27,17 @@ function slugify(filename: string): string {
   return filename.replace(/\.mdx?$/, '')
 }
 
+function parseFrontmatter(data: Record<string, unknown>, slug: string, content: string): PostMeta {
+  return {
+    slug,
+    title: (data.title as string) ?? slug,
+    description: (data.description as string) ?? '',
+    tag: (data.tag as string) ?? 'Essay',
+    readTime: calculateReadTime(content),
+    date: (data.date as string) ?? undefined,
+  }
+}
+
 export async function getAllPosts(): Promise<PostMeta[]> {
   if (!fs.existsSync(CONTENT_DIR)) return []
 
@@ -36,15 +47,7 @@ export async function getAllPosts(): Promise<PostMeta[]> {
     const slug = slugify(filename)
     const raw = fs.readFileSync(path.join(CONTENT_DIR, filename), 'utf-8')
     const { data, content } = matter(raw)
-
-    return {
-      slug,
-      title: data.title ?? slug,
-      description: data.description ?? '',
-      tag: data.tag ?? 'Essay',
-      readTime: calculateReadTime(content),
-      date: data.date ?? undefined,
-    } satisfies PostMeta
+    return parseFrontmatter(data, slug, content)
   })
 
   // Sort newest first if dates present, otherwise preserve file order
@@ -64,13 +67,5 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
   const raw = fs.readFileSync(filepath, 'utf-8')
   const { data, content } = matter(raw)
 
-  return {
-    slug,
-    title: data.title ?? slug,
-    description: data.description ?? '',
-    tag: data.tag ?? 'Essay',
-    readTime: calculateReadTime(content),
-    date: data.date ?? undefined,
-    content,
-  }
+  return { ...parseFrontmatter(data, slug, content), content }
 }

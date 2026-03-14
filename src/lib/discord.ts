@@ -33,11 +33,13 @@ function formatStats(memberCount: number, onlineCount: number): ServerStats {
   }
 }
 
-export async function getServerStats(): Promise<ServerStats> {
+import { cache } from 'react'
+
+export const getServerStats = cache(async function (): Promise<ServerStats> {
   try {
     const res = await fetch(
       'https://discord.com/api/invites/worldwide?with_counts=true',
-      { next: { revalidate: false } }
+      { cache: 'force-cache' }
     )
     if (!res.ok) return FALLBACK
 
@@ -53,4 +55,4 @@ export async function getServerStats(): Promise<ServerStats> {
   } catch {
     return FALLBACK
   }
-}
+})
