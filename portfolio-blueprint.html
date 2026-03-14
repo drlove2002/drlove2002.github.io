@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Blueprint — Sudip Roy (drlove)</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --border: #2a2a2a;
+    --accent: #e87c3a;
+    --accent2: #3ae8b4;
+    --text: #e8e4dc;
+    --muted: #666;
+    --rust: #b7410e;
+    --python: #3572a5;
+    --next: #e8e4dc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lora', serif;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 3rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* BLUEPRINT LABEL */
+  .blueprint-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    opacity: 0.8;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 5rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p { color: #aaa; margin-bottom: 1rem; }
+
+  .accent { color: var(--accent); }
+  .accent2 { color: var(--accent2); }
+  .muted { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+
+  /* DESIGN NOTE BOXES */
+  .design-note {
+    background: rgba(232, 124, 58, 0.06);
+    border: 1px solid rgba(232, 124, 58, 0.25);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.25rem;
+    border-radius: 0 4px 4px 0;
+    margin: 1.5rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #c0a882;
+    line-height: 1.7;
+  }
+
+  .design-note strong {
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ===== PAGE 1: HOME ===== */
+  .hero {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(232,124,58,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 span.line2 {
+    color: var(--muted);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: #888;
+    max-width: 500px;
+    margin: 1.5rem 0 2.5rem;
+    font-style: italic;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-item {}
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .stat-num .unit { font-size: 1rem; color: var(--accent); }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .btn-primary {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1.75rem;
+    background: var(--accent);
+    color: #0a0a0a;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .btn-ghost {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1.75rem;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  /* STACK CHIPS */
+  .stack-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  .chip.rust { border-color: #b7410e55; color: #e05c20; background: rgba(183,65,14,0.08); }
+  .chip.python { border-color: #3572a555; color: #5b9bd5; background: rgba(53,114,165,0.08); }
+  .chip.next { border-color: #ffffff22; color: #ccc; background: rgba(255,255,255,0.04); }
+  .chip.db { border-color: #3ae8b444; color: var(--accent2); background: rgba(58,232,180,0.06); }
+
+  /* ===== DATABASE EVOLUTION TIMELINE ===== */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin: 2rem 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+    padding-left: 1.5rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 0.4rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-item.problem::before {
+    background: #e05c20;
+  }
+
+  .timeline-trigger {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-tech {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-why {
+    font-family: 'Lora', serif;
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
+  }
+
+  /* ARCHITECTURE LAYERS */
+  .arch-layers {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 1.5rem 0;
+  }
+
+  .arch-layer {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .arch-layer:last-child { border-bottom: none; }
+
+  .arch-lang {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .arch-desc {
+    font-size: 0.85rem;
+    color: #999;
+    font-family: 'Lora', serif;
+  }
+
+  .arch-why {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-align: right;
+    max-width: 180px;
+  }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 1.5rem 0;
+  }
+
+  .card {
+    background: var(--surface);
+    padding: 1.75rem;
+    transition: background 0.2s;
+  }
+
+  .card:hover { background: var(--surface2); }
+
+  .card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* ABOUT SECTION */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .interest-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .interest-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .interest-item span { color: var(--accent); }
+
+  /* PAGE NAVIGATOR */
+  .page-nav {
+    display: flex;
+    gap: 0;
+    margin-bottom: 4rem;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    width: fit-content;
+  }
+
+  .page-tab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.6rem 1.25rem;
+    border-right: 1px solid var(--border);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .page-tab:last-child { border-right: none; }
+  .page-tab.active {
+    background: var(--accent);
+    color: #0a0a0a;
+  }
+  .page-tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+
+  /* PAGE SECTION HEADERS */
+  .page-section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-section-header h2 { margin-bottom: 0; }
+
+  .page-url {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--border);
+  }
+
+  /* WRITING POSTS */
+  .post-list {
+    display: grid;
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+
+  .post-item {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .post-item:last-child { border-bottom: none; }
+  .post-item:hover { background: var(--surface2); }
+
+  .post-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+  }
+
+  .post-desc {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+
+  .post-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--accent);
+    border: 1px solid rgba(232,124,58,0.3);
+    padding: 0.2rem 0.5rem;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 1.5rem;
+  }
+
+  .contact-item {
+    background: var(--surface);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contact-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  .contact-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text);
+  }
+
+  .contact-note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 4rem;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+    display: block;
+  }
+
+  /* BIG QUOTE */
+  .pull-quote {
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #999;
+    border-left: 3px solid var(--accent);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    line-height: 1.6;
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: rgba(58, 232, 180, 0.05);
+    border: 1px solid rgba(58, 232, 180, 0.2);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 2px;
+  }
+
+  .highlight-box p { color: #999; margin: 0; font-size: 0.9rem; }
+
+  /* SECTION TITLES WITH NUMBERS */
+  .numbered-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* BLUEPRINT META */
+  .blueprint-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .bp-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    display: flex;
+    gap: 2rem;
+  }
+
+  .bp-meta span { color: var(--accent); }
+
+  /* PAGE BREAK INDICATOR */
+  .page-break {
+    background: var(--surface);
+    border-top: 2px solid var(--accent);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .page-break::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent);
+  }
+
+  .page-break-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  .page-break-url {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 768px) {
+    .section { padding: 3rem 1.5rem; }
+    .nav { padding: 1rem 1.5rem; }
+    .two-col { grid-template-columns: 1fr; gap: 2rem; }
+    .arch-layer { grid-template-columns: 1fr; }
+    .arch-why { text-align: left; }
+    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .bp-meta { flex-wrap: wrap; gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BLUEPRINT META BAR -->
+<div class="blueprint-header">
+  <div class="bp-meta">
+    <span>PORTFOLIO BLUEPRINT</span>
+    <span>Subject: <span>Sudip Roy / drlove2002</span></span>
+    <span>Domain: <span>drlove.dev</span></span>
+    <span>Framework: <span>Next.js</span></span>
+  </div>
+  <div class="blueprint-label">Design Reference</div>
+</div>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+  <div class="nav-logo">Sudip Roy <span>·</span> drlove</div>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Worldwide</a></li>
+    <li><a href="#">Writing</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ==================== PAGE 1: HOME ==================== -->
+<div class="page-break">
+  <span class="page-break-label">Page 1 — Home</span>
+  <span class="page-break-url">drlove.dev/</span>
+</div>
+
+<section class="section hero">
+  <div class="hero-eyebrow">West Bengal → World</div>
+  <h1>
+    I build systems<br>
+    <span class="line2">people live inside.</span>
+  </h1>
+  <p class="hero-sub">
+    Five years. One platform. 50,000 people.<br>
+    From a JSON file to a Rust-powered distributed system.
+  </p>
+
+  <div class="cta-row">
+    <button class="btn-primary">See the Work</button>
+    <button class="btn-ghost">My Story</button>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">50<span class="unit">k+</span></div>
+      <div class="stat-label">Server Members</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2<span class="unit">k+</span></div>
+      <div class="stat-label">Daily Active Users</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Years in Production</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Database Systems Used</div>
+    </div>
+  </div>
+
+  <div class="design-note">
+    <strong>🎨 Design Intent — Hero Section</strong>
+    Dark background with a very subtle warm radial glow top-right. Numbers animate up with a counter effect on page load. The "line2" in muted gray creates visual contrast without needing color. Stats appear with a staggered fade-in (150ms delay each). This above-the-fold makes an instant claim: this person has done something real at scale.
+  </div>
+</section>
+
+<!-- STACK STRIP -->
+<div style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1.25rem 3rem; background: var(--surface);">
+  <div style="max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
+    <span class="muted" style="white-space: nowrap;">Production Stack →</span>
+    <div class="stack-row" style="margin: 0;">
+      <span class="chip python">Python</span>
+      <span class="chip rust">Rust</span>
+      <span class="chip rust">gRPC</span>
+      <span class="chip next">Next.js</span>
+      <span class="chip db">PostgreSQL</span>
+      <span class="chip db">Redis</span>
+      <span class="chip db">MongoDB</span>
+      <span class="chip db">libSQL</span>
+      <span class="chip next">Axum</span>
+      <span class="chip next">AWS</span>
+      <span class="chip next">Cloudflare</span>
+    </div>
+  </div>
+</div>
+
+<!-- THREE VALUE PROPS -->
+<section class="section" style="padding-top: 3rem; padding-bottom: 3rem;">
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">⚙️</div>
+      <h3>Systems Thinker</h3>
+      <p style="font-size: 0.9rem;">Chose Rust for the financial layer specifically because GC pauses were unacceptable in a real-money transaction path. Not because it was trendy.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📈</div>
+      <h3>Economy Designer</h3>
+      <p style="font-size: 0.9rem;">Built and balanced a virtual economy for 50,000 people. Inflation prevention, exploit detection, reward psychology — applied, not academic.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <h3>Problem-Driven Builder</h3>
+      <p style="font-size: 0.9rem;">Migrated through six database systems over five years — each migration triggered by a real failure, not a tutorial recommendation.</p>
+    </div>
+  </div>
+
+  <div class="design-note">
+    <strong>🎨 Design Intent — Value Props</strong>
+    Three cards in a borderless grid separated only by 1px lines (the gap + border trick). No icons box — just the emoji + tight text. Each card tells a story in 2 sentences max. Hover lifts background slightly. This section answers: "why is this person interesting?" in 10 seconds of reading.
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ==================== PAGE 2: WORLDWIDE PROJECT ==================== -->
+<div class="page-break">
+  <span class="page-break-label">Page 2 — Worldwide Project</span>
+  <span class="page-break-url">drlove.dev/worldwide</span>
+</div>
+
+<section class="section">
+  <div class="section-label">Case Study · 2019 — Present</div>
+  <h2>Worldwide Discord Platform</h2>
+  <p style="max-width: 600px;">A real-time community platform with an economy system, games, and events — serving 50,000 members with 2,000+ daily active users. Built from scratch. No playbook.</p>
+
+  <div class="stack-row">
+    <span class="chip python">Python · Gateway</span>
+    <span class="chip rust">Rust · Data Layer</span>
+    <span class="chip next">Next.js · Dashboard</span>
+    <span class="chip db">PostgreSQL</span>
+    <span class="chip db">Redis</span>
+    <span class="chip rust">gRPC</span>
+    <span class="chip rust">Axum</span>
+    <span class="chip db">libSQL</span>
+  </div>
+
+  <div style="display: flex; gap: 0.75rem; margin: 1.5rem 0;">
+    <button class="btn-ghost" style="font-size: 0.7rem; padding: 0.5rem 1rem;">Visit Server</button>
+    <button class="btn-ghost" style="font-size: 0.7rem; padding: 0.5rem 1rem;">Live Dashboard ↗</button>
+  </div>
+
+  <!-- SECTION 1: Architecture -->
+  <div class="numbered-header" style="margin-top: 3rem;">
+    <span class="section-num">01</span>
+    <h3>System Architecture — Why Three Languages</h3>
+  </div>
+
+  <p style="max-width: 650px;">The system has three layers. Each was built in a different language — not to show off, but because each layer has fundamentally different requirements that made different tools correct.</p>
+
+  <div class="arch-layers">
+    <div class="arch-layer" style="background: rgba(53,114,165,0.05);">
+      <div class="arch-lang" style="color: #5b9bd5;">Python<br><span style="color: var(--muted); font-weight: 300;">Discord Gateway</span></div>
+      <div class="arch-desc">Handles the Discord event stream. asyncio fits naturally with Discord's WebSocket gateway — thousands of concurrent events, all I/O bound. Best library ecosystem for Discord's API lives in Python.</div>
+      <div class="arch-why">Async I/O<br>Event-driven<br>Best Discord libs</div>
+    </div>
+    <div class="arch-layer" style="background: rgba(183,65,14,0.05);">
+      <div class="arch-lang" style="color: #e05c20;">Rust<br><span style="color: var(--muted); font-weight: 300;">Data Access Layer</span></div>
+      <div class="arch-desc">Handles all database operations and real-money transactions via Axum. GC pauses are unacceptable in a payment path. Rust's ownership model guarantees memory safety without a runtime. libSQL embedded in-process eliminates network latency entirely.</div>
+      <div class="arch-why">No GC pauses<br>Memory safety<br>Financial path</div>
+    </div>
+    <div class="arch-layer" style="background: rgba(255,255,255,0.02);">
+      <div class="arch-lang" style="color: #ccc;">Next.js<br><span style="color: var(--muted); font-weight: 300;">Web Dashboard</span></div>
+      <div class="arch-desc">Server-side rendered admin dashboard for monitoring server economy, user stats, and event management. Deployed on Cloudflare Workers for edge performance.</div>
+      <div class="arch-why">SSR for dashboard<br>Edge deployment<br>React ecosystem</div>
+    </div>
+  </div>
+
+  <div class="design-note">
+    <strong>🎨 Design Intent — Architecture Section</strong>
+    The three-layer table is the most important visual on this page. Color-coded by language (subtle background tint). Three columns: language/role, why it was chosen, key properties. No code shown. A senior engineer reading this immediately understands you made informed decisions, not random ones. Add a simple SVG diagram above this showing the three boxes connected by arrows: Discord ↔ Python ↔ [gRPC] ↔ Rust ↔ Databases. That diagram takes 30 minutes to make and dramatically improves comprehension.
+  </div>
+
+  <!-- SECTION 2: Database Evolution -->
+  <div class="numbered-header" style="margin-top: 3rem;">
+    <span class="section-num">02</span>
+    <h3>The Database Evolution — Driven by Real Failures</h3>
+  </div>
+
+  <p style="max-width: 650px;">This is the most honest part of the case study. Every database migration happened because something broke, something scaled poorly, or something cost too much latency. Here's the progression.</p>
+
+  <div class="timeline">
+    <div class="timeline-item problem">
+      <div class="timeline-trigger">🔴 Problem: Concurrent Writes Crash</div>
+      <div class="timeline-tech">Raw JSON File → MongoDB Sharded Cluster</div>
+      <div class="timeline-why">JSON files can't handle concurrent writes. Multiple economy transactions crashing the bot was the forcing function to learn proper databases. Chose MongoDB's sharded cluster specifically for write throughput.</div>
+    </div>
+    <div class="timeline-item problem">
+      <div class="timeline-trigger">🔴 Problem: Query Latency</div>
+      <div class="timeline-tech">Added Redis Caching Layer</div>
+      <div class="timeline-why">As member count grew, read latency became noticeable in user-facing interactions. Redis caching for hot data (active user economy states) brought response times down significantly.</div>
+    </div>
+    <div class="timeline-item problem">
+      <div class="timeline-trigger">🔴 Problem: Relational Data Needs</div>
+      <div class="timeline-tech">MongoDB → PostgreSQL as Primary</div>
+      <div class="timeline-why">The economy system developed complex relational requirements — transactions, balances, event histories — that document stores aren't built for. Migrated to PostgreSQL while keeping Redis as the caching layer.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-trigger">🟢 Optimization: Network Overhead</div>
+      <div class="timeline-tech">libSQL Embedded in Rust Process</div>
+      <div class="timeline-why">Built the Rust Data Access Layer with gRPC for Python communication. Then took it further: embedded libSQL directly inside the Rust process to eliminate network round-trips for the most latency-sensitive operations entirely.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-trigger">🟠 Curiosity: Can We Do Better?</div>
+      <div class="timeline-tech">Partial Custom Redis Implementation</div>
+      <div class="timeline-why">Wasn't satisfied with off-the-shelf Redis behavior for specific caching patterns. Built parts of a custom Redis implementation to achieve better results for the specific access patterns of the economy system.</div>
+    </div>
+  </div>
+
+  <div class="design-note">
+    <strong>🎨 Design Intent — Database Timeline</strong>
+    This is the single most impressive section in your entire portfolio for technical readers. The timeline format works because it shows *causality* — each step was forced by a real problem. Color code the trigger labels: red for problems that forced change, green for proactive optimizations, orange for curiosity-driven improvements. This visual alone tells a 5-year engineering story in 2 minutes of reading. The custom Redis detail should be visually distinct — maybe a slightly different card style — because it's the most exceptional data point.
+  </div>
+
+  <!-- SECTION 3: Economy Design -->
+  <div class="numbered-header" style="margin-top: 3rem;">
+    <span class="section-num">03</span>
+    <h3>Economy Design — Where Engineering Meets Behavioral Psychology</h3>
+  </div>
+
+  <div class="pull-quote">
+    "A virtual economy with 50,000 participants behaves like a real economy. Inflation, exploitation, reward psychology, and trust — all of it applies."
+  </div>
+
+  <div class="card-grid" style="margin: 1rem 0;">
+    <div class="card">
+      <h3 style="font-size: 0.9rem;">Inflation Prevention</h3>
+      <p style="font-size: 0.8rem;">Controlling money supply through sinks and faucets — events that remove currency must balance events that generate it.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size: 0.9rem;">Exploit Detection</h3>
+      <p style="font-size: 0.8rem;">Rate limiting, anomaly detection on transaction patterns, and rollback mechanisms for economic exploits.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size: 0.9rem;">Reward Psychology</h3>
+      <p style="font-size: 0.8rem;">Variable ratio reinforcement schedules in gambling and games. Daily streaks. Loss aversion mechanics. Applied behavioral economics.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size: 0.9rem;">Real Money Bridge</h3>
+      <p style="font-size: 0.8rem;">Real currency purchase flow via Axum API. Trust, security, and UX around financial transactions in a gaming context.</p>
+    </div>
+  </div>
+
+  <div class="design-note">
+    <strong>🎨 Design Intent — Economy Section</strong>
+    This section differentiates you from every other CS applicant. Lead with the pull quote — it frames the section philosophically before going technical. The four cards show you thought about this multidimensionally. Note: don't reveal specific exploit mechanics or pricing — just the categories of thinking. This section should reference your interest in economics and game theory naturally: "My interest in behavioral economics and games like Factorio directly informed these design decisions." One sentence. No lecture needed.
+  </div>
+
+  <!-- SECTION 4: What Went Wrong -->
+  <div class="numbered-header" style="margin-top: 3rem;">
+    <span class="section-num">04</span>
+    <h3>What Went Wrong — The Honest Section</h3>
+  </div>
+
+  <p style="max-width: 650px;">Every senior engineer reading a portfolio looks for this. Anyone can list achievements. Only someone who actually built something can describe what they got wrong.</p>
+
+  <div class="highlight-box">
+    <p><strong style="color: var(--accent2);">The Cache Bug Incident.</strong> A bug in the Redis cache layer caused three days of user economy data to be lost permanently. Partial recovery from logs was possible but not complete. Response: publicly acknowledged the issue to the 50,000-member community, compensated affected users with virtual currency. Long-term fix: added comprehensive test coverage, log points throughout the transaction path, and auto-recovery mechanisms. Lesson: transparency with users is not optional. Systems fail. Response to failure is what builds trust.</p>
+  </div>
+
+  <div class="design-note">
+    <strong>🎨 Design Intent — What Went Wrong</strong>
+    The cache bug story is perfect for this section because it shows three things at once: technical failure (the bug), human judgment (how you handled the community), and engineering response (the systematic fix). DAAD evaluators specifically value self-awareness. This section should also include 1-2 architectural decisions you'd reverse — for example, "I'd start with PostgreSQL from day one instead of migrating to it" or "I'd design the gRPC interface differently." Those show current technical maturity, not just past mistakes. The highlight box treatment makes this feel like a retrospective memo, not a confession.
+  </div>
+
+  <!-- SECTION 5: What's Next -->
+  <div class="numbered-header" style="margin-top: 3rem;">
+    <span class="section-num">05</span>
+    <h3>What's Next — The Bridge to Germany</h3>
+  </div>
+
+  <p style="max-width: 650px;">One focused paragraph that connects your 5-year project to why you want a CS master's in Germany. Mention TU Berlin specifically. Mention the companies you want to work at during your Werkstudent. Make it concrete, not generic. This is the paragraph DAAD reads before deciding.</p>
+
+  <div class="design-note">
+    <strong>🎨 Design Intent — What's Next</strong>
+    Keep this short. One paragraph. No bullet points. The preceding four sections did all the heavy lifting. This section just closes the loop: "here's where I've been, here's why that naturally leads to this specific place, here's what I'll do when I get there." End with a link to your About page for the full personal story.
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ==================== PAGE 3: WRITING ==================== -->
+<div class="page-break">
+  <span class="page-break-label">Page 3 — Writing</span>
+  <span class="page-break-url">drlove.dev/writing</span>
+</div>
+
+<section class="section">
+  <div class="section-label">Technical Writing</div>
+  <h2>Writing</h2>
+  <p>Technical articles from five years of building real systems. No tutorials. No rephrased documentation. Only things I actually learned by getting them wrong first.</p>
+
+  <div class="post-list" style="margin-top: 2rem;">
+    <div class="post-item">
+      <div>
+        <div class="post-title">Why I Chose Rust for the Financial Layer of My Discord Bot</div>
+        <div class="post-desc">GC pauses, memory safety, and why Axum handles real-money transactions · 8 min read</div>
+      </div>
+      <span class="post-tag">Systems</span>
+    </div>
+    <div class="post-item">
+      <div>
+        <div class="post-title">Designing a Virtual Economy for 50,000 People</div>
+        <div class="post-desc">Inflation, exploit prevention, reward psychology — applied behavioral economics · 12 min read</div>
+      </div>
+      <span class="post-tag">Economy Design</span>
+    </div>
+    <div class="post-item">
+      <div>
+        <div class="post-title">Six Databases in Five Years — A Story of Real Failures</div>
+        <div class="post-desc">JSON → MongoDB → Redis → PostgreSQL → libSQL → custom cache. Each migration had a reason · 10 min read</div>
+      </div>
+      <span class="post-tag">Databases</span>
+    </div>
+    <div class="post-item">
+      <div>
+        <div class="post-title">What Building a Community of 50,000 Taught Me About Software</div>
+        <div class="post-desc">User behavior, feedback loops, and the things no computer science curriculum covers · 7 min read</div>
+      </div>
+      <span class="post-tag">Product</span>
+    </div>
+  </div>
+
+  <div class="design-note">
+    <strong>🎨 Design Intent — Writing Page</strong>
+    Simple, editorial list layout. No thumbnails, no tag clouds, no distractions. Each post has title, one-line description with reading time, and a single category tag. The category tags use the same accent color system as the rest of the site. The post titles should do all the work — they should be specific and intriguing, not generic. Notice the third post title "Six Databases in Five Years — A Story of Real Failures" — that framing is more compelling than "My Database Migration Journey." The dash construction works well for technical titles. These four posts are your minimum viable writing presence.
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ==================== PAGE 4: ABOUT ==================== -->
+<div class="page-break">
+  <span class="page-break-label">Page 4 — About</span>
+  <span class="page-break-url">drlove.dev/about</span>
+</div>
+
+<section class="section">
+  <div class="section-label">The Person</div>
+  <h2>About</h2>
+
+  <div class="two-col">
+    <div>
+      <p>I'm Sudip Roy, known online as <span class="accent">drlove</span>. I grew up in West Bengal, India, studying computer science while building things that were probably too ambitious for someone with no experience.</p>
+
+      <p>My path into software was unusual. It started with curiosity about how video games worked, led through learning to hack Wi-Fi to play a game (which taught me more about social engineering than any textbook), through Unity and Unreal Engine, and eventually landed on backend systems and distributed architecture.</p>
+
+      <p>For the last five years I've been co-owning and building Worldwide — a Discord server of 50,000 people with its own economy, games, and culture. That project has been my real education: not in theory, but in what happens when real people interact with systems you build at scale.</p>
+
+      <p>I'm now completing my M.Sc in Computer Science, having previously cleared the GATE exam. I'm looking to bring the practical depth I've built to a world-class research environment — specifically a master's program in Germany where I can be inside a city with the kind of creative tech companies I want to eventually build for or build myself.</p>
+
+      <p>Long term: CTO. Maybe founder. Definitely someone who builds things that outlast the building of them.</p>
+    </div>
+
+    <div>
+      <h3 style="margin-bottom: 1rem;">Outside the Code</h3>
+      <p style="font-size: 0.9rem; margin-bottom: 1.25rem;">The interests that don't look like CS but completely inform how I build systems:</p>
+
+      <div class="interest-grid">
+        <div class="interest-item"><span>♟</span> Chess</div>
+        <div class="interest-item"><span>🏭</span> Factorio</div>
+        <div class="interest-item"><span>📊</span> Economics</div>
+        <div class="interest-item"><span>🌍</span> Geopolitics</div>
+        <div class="interest-item"><span>🧠</span> Psychology</div>
+        <div class="interest-item"><span>📖</span> Philosophy</div>
+      </div>
+
+      <div class="design-note" style="margin-top: 1.5rem;">
+        <strong>🎨 Design Intent — Interests Grid</strong>
+        Add a single sentence after the grid that connects these to your work: "Factorio taught me more about logistics optimization and resource flow than any textbook. Economics and psychology informed every economy design decision in Worldwide. Chess sharpens how I think about long-term architectural tradeoffs." This one paragraph transforms a list of hobbies into evidence of a multidisciplinary systems thinker — which is exactly what DAAD scholarship committees value.
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ==================== PAGE 5: CONTACT ==================== -->
+<div class="page-break">
+  <span class="page-break-label">Page 5 — Contact</span>
+  <span class="page-break-url">drlove.dev/contact</span>
+</div>
+
+<section class="section">
+  <div class="section-label">Get in Touch</div>
+  <h2>Contact</h2>
+  <p>Open to conversations about engineering, research, and opportunities in Europe — particularly Germany.</p>
+
+  <div class="contact-grid">
+    <div class="contact-item">
+      <div class="contact-type">Email</div>
+      <div class="contact-value">sudiproy20yo@gmail.com</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-type">GitHub</div>
+      <div class="contact-value">github.com/drlove2002</div>
+      <div class="contact-note">Personal account. Worldwide org repos are private (IP protection) — architecture documented in the case study.</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-type">LinkedIn</div>
+      <div class="contact-value">linkedin.com/in/drlove2002</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-type">Discord Community</div>
+      <div class="contact-value">Worldwide Server</div>
+      <div class="contact-note">50,000+ members. The thing this portfolio is about.</div>
+    </div>
+  </div>
+
+  <div class="design-note" style="margin-top: 2rem;">
+    <strong>🎨 Design Intent — Contact Page</strong>
+    The private GitHub note is important — put it proactively so nobody wonders why your org is private. It frames the privacy as a professional decision (IP protection) not a red flag. The Discord link with "The thing this portfolio is about" as the note adds personality and closes the loop on the entire site's narrative. Keep this page clean and minimal — it's functional, not a showcase. The four-cell grid is all you need.
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ==================== OVERALL DESIGN SYSTEM ==================== -->
+<div class="page-break">
+  <span class="page-break-label">Design System Reference</span>
+  <span class="page-break-url">For Your Eyes Only</span>
+</div>
+
+<section class="section">
+  <div class="section-label">Implementation Notes</div>
+  <h2>Design System</h2>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+    <div>
+      <h3 style="margin-bottom: 1rem;">Color Palette</h3>
+      <div style="display: grid; gap: 0.5rem;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="width: 40px; height: 40px; background: #0a0a0a; border: 1px solid #333;"></div>
+          <div><div class="muted">#0a0a0a</div><div style="font-size:0.8rem; color:#888">Background — near black, not pure</div></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="width: 40px; height: 40px; background: #e87c3a; border: 1px solid #333;"></div>
+          <div><div class="muted">#e87c3a</div><div style="font-size:0.8rem; color:#888">Accent — warm amber, not orange</div></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="width: 40px; height: 40px; background: #3ae8b4; border: 1px solid #333;"></div>
+          <div><div class="muted">#3ae8b4</div><div style="font-size:0.8rem; color:#888">Accent 2 — used sparingly for highlights</div></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="width: 40px; height: 40px; background: #e8e4dc; border: 1px solid #333;"></div>
+          <div><div class="muted">#e8e4dc</div><div style="font-size:0.8rem; color:#888">Text — warm white, not pure</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="margin-bottom: 1rem;">Typography</h3>
+      <div style="display: grid; gap: 1rem;">
+        <div>
+          <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; letter-spacing: -0.03em;">Syne — Headlines</div>
+          <div class="muted">Used for all headings, stat numbers, nav logo</div>
+        </div>
+        <div>
+          <div style="font-family: 'Lora', serif; font-size: 1rem; font-style: italic;">Lora — Body Copy</div>
+          <div class="muted">Serif for warmth and readability in long text</div>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">JetBrains Mono — Labels & Code</div>
+          <div class="muted">All metadata, labels, chips, URLs, tech refs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 2.5rem;">
+    <h3 style="margin-bottom: 1rem;">Key Animations to Implement</h3>
+    <div class="post-list">
+      <div class="post-item">
+        <div>
+          <div class="post-title" style="font-size:0.85rem;">Counter Animation on Hero Stats</div>
+          <div class="post-desc">Use requestAnimationFrame or a counter library. 50000 counts up over ~1.5s on page load. Creates immediate impact.</div>
+        </div>
+        <span class="post-tag">High Priority</span>
+      </div>
+      <div class="post-item">
+        <div>
+          <div class="post-title" style="font-size:0.85rem;">Staggered Fade-In on Hero Load</div>
+          <div class="post-desc">eyebrow → h1 → subtitle → CTAs → stats. 150ms delay between each. CSS animation-delay, no library needed.</div>
+        </div>
+        <span class="post-tag">High Priority</span>
+      </div>
+      <div class="post-item">
+        <div>
+          <div class="post-title" style="font-size:0.85rem;">Timeline Item Scroll Reveal</div>
+          <div class="post-desc">Each database evolution step fades in as you scroll to it. IntersectionObserver. Reinforces the narrative progression.</div>
+        </div>
+        <span class="post-tag">Medium</span>
+      </div>
+      <div class="post-item">
+        <div>
+          <div class="post-title" style="font-size:0.85rem;">Stack Chip Hover States</div>
+          <div class="post-desc">Language chips on hover show a one-line tooltip: "Used for: Discord gateway layer". Small detail, signals craft.</div>
+        </div>
+        <span class="post-tag">Nice to Have</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="design-note" style="margin-top: 2rem;">
+    <strong>📐 The One Rule That Governs Everything</strong>
+    Every design decision should serve the narrative: "This person built something real, at scale, with good judgment." When in doubt about whether to add a visual element or section — ask: does this prove that claim, or does it just look nice? If it just looks nice, cut it. The site's restraint is part of the argument.
+  </div>
+</section>
+
+<footer>
+  <p>Blueprint for drlove.dev — Sudip Roy Portfolio</p>
+  <p>Built with Next.js · Deployed on Cloudflare Workers · <span style="color: var(--accent);">Every decision has a reason.</span></p>
+</footer>
+
+</body>
+</html>
