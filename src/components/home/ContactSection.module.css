@@ -1,0 +1,110 @@
+.contactSection {
+  /* .section utility provides max-width, margin, horizontal padding */
+  padding-top: 3rem !important;
+  padding-bottom: 5rem !important;
+}
+
+.contactSub {
+  color: var(--muted);
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.contactItem {
+  background: var(--bg);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background var(--duration) var(--ease);
+}
+
+.contactItem:hover {
+  background: var(--surface);
+}
+
+.contactHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.contactIconCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--channel-color) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--channel-color) 25%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--channel-color);
+  font-size: 1rem;
+  flex-shrink: 0;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contactItem:hover .contactIconCircle {
+  background: color-mix(in srgb, var(--channel-color) 20%, transparent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--channel-color) 25%, transparent);
+}
+
+.contactType {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--channel-color);
+}
+
+.contactValue {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  transition: color var(--duration) var(--ease);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+a.contactValue:hover {
+  color: var(--channel-color);
+}
+
+.contactArrow {
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: opacity var(--duration) var(--ease), transform var(--duration) var(--ease);
+  transform: translate(-2px, 2px);
+}
+
+.contactItem:hover .contactArrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.contactNote {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 640px) {
+  .contactGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -180,7 +180,7 @@ export default async function WorldwidePage() {
           scale — distributed systems, high-reliability infrastructure, companies where architecture
           decisions matter. The next platform won&apos;t be a Discord bot. But the same thinking
           will apply.{' '}
-          <Link href="/about" style={{ color: 'var(--accent)' }}>Read the full story →</Link>
+          <Link href="/#journey" style={{ color: 'var(--accent)' }}>Read the full story →</Link>
         </p>
       </section>
     </article>

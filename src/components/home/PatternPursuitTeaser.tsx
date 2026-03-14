@@ -2,6 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import Chip from '@/components/ui/Chip'
 import styles from './PatternPursuitTeaser.module.css'
 
 export default function PatternPursuitTeaser() {
@@ -24,11 +25,17 @@ export default function PatternPursuitTeaser() {
           Pattern Pursuit
         </h2>
         <p className={styles.sub}>
-          An interactive prediction game built on 5-gram language models. Rust +
-          Actix backend, TypeScript frontend, Redis for real-time state, Docker +
-          AWS for deployment. Players compete against the model — and the model
-          learns.
+          An interactive prediction game built on 5-gram language models. Players
+          compete against the model in real time — and the model learns.
         </p>
+        <div className={styles.chipRow} role="list" aria-label="Technologies used">
+          <Chip label="Rust · Actix" variant="rust" tooltip="Backend API and game logic" />
+          <Chip label="TypeScript" variant="next" tooltip="Frontend interface" />
+          <Chip label="Redis" variant="db" tooltip="Real-time game state" />
+          <Chip label="Docker" variant="next" tooltip="Containerized deployment" />
+          <Chip label="AWS" variant="next" tooltip="Cloud infrastructure" />
+          <Chip label="NLP / 5-gram" variant="default" tooltip="Language model for prediction" />
+        </div>
         <a
           href="https://github.com/drlove2002/pattern_pursuit"
           className={styles.cta}

@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
+import rehypePrettyCode from 'rehype-pretty-code'
+import rehypeSlug from 'rehype-slug'
 import { getAllPosts, getPostBySlug } from '@/lib/mdx'
 import SectionLabel from '@/components/ui/SectionLabel'
 import styles from './article.module.css'
@@ -34,7 +36,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const mdxOptions = {
   mdxOptions: {
     remarkPlugins: [remarkGfm],
-    rehypePlugins: [],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    rehypePlugins: [rehypeSlug, [rehypePrettyCode, { theme: 'github-dark' }]] as any,
   },
 }
 

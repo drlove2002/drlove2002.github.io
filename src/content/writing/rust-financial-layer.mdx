@@ -5,6 +5,130 @@ tag: "Systems"
 date: "2025-01-15"
 ---
 
-*This article is a work in progress. Full version coming soon.*
+When you're processing real-money transactions for 50,000 Discord users, you can't afford garbage collection pauses. Here's why Rust was the only reasonable choice — and what the migration actually looked like.
 
-When you're processing real-money transactions for 50,000 Discord users, you can't afford garbage collection pauses. Here's why Rust was the only reasonable choice.
+## The Problem That Forced the Decision
+
+Worldwide's economy started as a Python bot with a SQLite database. Users earned virtual currency, spent it in a shop, and bet it in games. For the first two years, this was fine.
+
+Then it wasn't.
+
+At around 10,000 active users, I started seeing something alarming: **double-spends**. A user would click "buy" twice quickly and receive two items while only losing the cost once. The race condition lived in the gap between reading balance, checking it, and writing the updated value — classic TOCTOU, made worse by Python's async model and the GIL.
+
+The fix I implemented in Python worked: advisory locks, serialized transaction queues, explicit retries. But it was slow. Under load, transaction throughput was throttled to avoid lock contention. Users noticed lag on shop purchases.
+
+More concerning: I was building an economy where people were spending real money to buy virtual currency. Losing a few credits to a race condition is annoying. Losing real money is a different category of problem.
+
+I needed something I could reason about at the memory level. Python's runtime model — the GIL, the garbage collector, the object overhead — made that impossible.
+
+## Why Not Just Fix the Python?
+
+The honest answer is that I tried.
+
+I moved the financial logic into a separate microservice. I added Redis-based distributed locks. I wrote extensive tests for the race conditions I'd found. The tests passed. Then something else I hadn't tested failed in production.
+
+The issue wasn't the specific bugs — it was the *model*. Python's memory model doesn't give you tools to reason about ownership and lifetime. You hold a reference to an object, but you don't own it. Something else might have modified it. The GC might collect it. The async loop might pause mid-operation.
+
+Rust's ownership model is different in a way that matters here: **the borrow checker enforces single ownership and explicit sharing at compile time**. The class of bugs I was fighting — concurrent modification, use-after-free of in-flight transaction state — literally cannot compile in safe Rust.
+
+That's not marketing. I'm describing a category of errors that the type system rejects before your code runs.
+
+## The Architecture: Python Calls Rust via gRPC
+
+I didn't rewrite the entire bot. The Discord command handling, the moderation logic, the game systems — those stayed in Python. Python is genuinely good at high-level orchestration and Discord.py's interface is excellent.
+
+What moved to Rust was the *data layer*: the service responsible for all balance operations, transaction history, and consistency guarantees.
+
+```
+Discord Event → Python (discord.py)
+                    ↓
+              gRPC call (UNIX socket)
+                    ↓
+              Rust service (Axum)
+                    ↓
+           Transaction logic + libSQL
+```
+
+The Python bot calls the Rust service over gRPC for anything that touches money. The Rust service owns the ledger.
+
+I chose [Axum](https://github.com/tokio-rs/axum) as the web framework because it composes well with Tokio and the type system maps naturally onto the request-response pattern. Each financial operation is an explicit type:
+
+```rust
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TransferRequest {
+    pub from_user: UserId,
+    pub to_user: UserId,
+    pub amount: u64,
+    pub idempotency_key: Uuid,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub enum TransferResult {
+    Success { new_balance: u64 },
+    InsufficientFunds { available: u64 },
+    UserNotFound { user_id: UserId },
+    DuplicateTransaction,
+}
+```
+
+No stringly-typed error handling. No `None` that might mean "user not found" or might mean "database error." Every outcome is a variant. The compiler forces you to handle them.
+
+## Idempotency Keys: The Real Lesson
+
+The most important design decision wasn't Rust vs. Python. It was idempotency keys.
+
+Every financial operation from the Python side generates a UUID before it makes the gRPC call. The Rust service stores that key in the database alongside the transaction. If the same UUID arrives twice — because the network timed out, because the bot restarted mid-operation, because anything — the second call returns the same result as the first without re-executing.
+
+```rust
+pub async fn transfer(
+    db: &Database,
+    req: TransferRequest,
+) -> Result<TransferResult> {
+    // Check if we've already processed this operation
+    if let Some(cached) = db.get_idempotent_result(&req.idempotency_key).await? {
+        return Ok(cached);
+    }
+
+    // Execute in a transaction
+    let result = db.transaction(|tx| async move {
+        let balance = tx.get_balance(req.from_user).await?;
+        if balance < req.amount {
+            return Ok(TransferResult::InsufficientFunds { available: balance });
+        }
+        tx.debit(req.from_user, req.amount).await?;
+        tx.credit(req.to_user, req.amount).await?;
+        let new_balance = tx.get_balance(req.from_user).await?;
+        Ok(TransferResult::Success { new_balance })
+    }).await?;
+
+    // Cache the result
+    db.store_idempotent_result(&req.idempotency_key, &result).await?;
+    Ok(result)
+}
+```
+
+This eliminated the double-spend class of bugs entirely. The idempotency key makes the operation *safe to retry*. You can retry as many times as you want — you'll always get the same result.
+
+## Performance: What Actually Changed
+
+The raw throughput numbers improved significantly — Rust handles thousands of transactions per second on the same hardware that throttled Python to a few hundred. But that's almost beside the point.
+
+The more meaningful change was **tail latency**. Python's GC creates occasional pauses — usually a few milliseconds, sometimes longer. In financial transactions, "occasionally slow" is actually worse than "consistently slow" because users experience it as random failures.
+
+Rust doesn't have a GC. Memory is allocated and freed deterministically. The p99 latency dropped from ~180ms to ~12ms on the same operations. That's the difference between feeling snappy and feeling broken.
+
+## What I'd Do Differently
+
+The gRPC interface is over-engineered for what I actually needed. I defined protobuf schemas, generated stubs in both languages, and maintained the proto files across two codebases. For a two-service setup on a single machine, that's a lot of ceremony.
+
+If I were starting over, I'd use a simpler IPC mechanism for the initial version — maybe a basic HTTP API or even a Unix socket with JSON — and only introduce protobufs when the schema complexity justified it.
+
+The other thing I'd change: test the *invariants*, not the *code paths*. My early tests checked specific scenarios ("transfer 100 credits succeeds"). Better tests check properties ("the sum of all balances never decreases"). Property-based testing with something like `proptest` would have caught issues my scenario tests missed.
+
+## The Broader Point
+
+I'm not arguing that Rust is always the right choice. For most web services, the GC overhead is irrelevant and the development speed tradeoff is real.
+
+But for systems that need to be *correct under concurrency*, Rust's type system is a fundamentally different tool. The borrow checker isn't friction — it's the compiler doing the work of proving your concurrent code is safe. That's a different category of confidence than "my tests pass."
+
+When correctness matters more than iteration speed, that tradeoff is worth it.

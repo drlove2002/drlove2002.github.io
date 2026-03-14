@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import type { ServerStats } from '@/lib/discord'
+import Chip from '@/components/ui/Chip'
 import styles from './WorldwideTeaser.module.css'
 
 interface WorldwideTeaserProps {
@@ -31,10 +32,17 @@ export default function WorldwideTeaser({ stats }: WorldwideTeaserProps) {
         </h2>
         <p className={styles.sub}>
           A Discord community I co-founded and engineered for five years — now
-          serving {stats.memberCountFormatted} members and {stats.onlineCountFormatted}+ daily active users. The full story:
-          3-language architecture, 6 databases, real-money economy design, and
-          what went wrong.
+          serving {stats.memberCountFormatted} members and {stats.onlineCountFormatted}+ daily active users. 3-language
+          architecture, 6 databases, real-money economy, and what went wrong.
         </p>
+        <div className={styles.chipRow} role="list" aria-label="Technologies used">
+          <Chip label="Python" variant="python" tooltip="Discord gateway layer" />
+          <Chip label="Rust · Axum" variant="rust" tooltip="Data access layer & transactions" />
+          <Chip label="gRPC" variant="rust" tooltip="Inter-process communication" />
+          <Chip label="PostgreSQL" variant="db" tooltip="Primary relational database" />
+          <Chip label="Redis" variant="db" tooltip="Cache + real-time state" />
+          <Chip label="libSQL" variant="db" tooltip="Embedded DB in Rust process" />
+        </div>
         <Link href="/worldwide" className={styles.cta}>
           Read the Case Study →
         </Link>

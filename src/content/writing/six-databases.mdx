@@ -5,6 +5,147 @@ tag: "Databases"
 date: "2025-02-20"
 ---
 
-*This article is a work in progress. Full version coming soon.*
+Every database I've ever used taught me something the previous one couldn't. This is the honest story of six migrations over five years — what broke, what I chose next, and why. No benchmarks. Just real decisions under real constraints.
 
-Every database I ever used taught me something the previous one couldn't. This is the honest story of why I kept switching, what broke each time, and what I'd do differently.
+## 1. JSON files (2019 — 2019)
+
+**Why I started here:** I didn't know databases existed. I was 17, building my first Discord bot in Python, and `json.dump()` was the only persistence I knew.
+
+```python
+with open('economy.json', 'r') as f:
+    data = json.load(f)
+
+data['users'][str(user_id)]['coins'] += 100
+
+with open('economy.json', 'w') as f:
+    json.dump(data, f)
+```
+
+**Why it broke:** Race conditions. Two Discord events arriving within milliseconds would both read the same file, both modify a value, and one would overwrite the other. Users would earn coins and they'd disappear. I couldn't reproduce it reliably. It took me two weeks to understand what was happening.
+
+**What I learned:** Persistence requires atomicity. Writing a file is not atomic. Two processes writing to the same file is undefined behavior. I'd independently discovered why databases exist.
+
+**Duration:** 3 months, until the data file grew past 50MB and every write took a second.
+
+---
+
+## 2. MongoDB (2019 — 2020)
+
+**Why I chose it:** The Discord.py tutorial I found used it. Motor (the async MongoDB driver) integrated cleanly. It felt professional.
+
+**What worked:** The document model fit Discord's data naturally. A user is a document. A server is a document. No schema migrations when I added new fields — just add them. For a rapidly evolving bot, that was genuinely useful.
+
+**Why it broke:** I didn't understand indexes. At 5,000 users, queries that had been instant started taking 200-500ms because I was doing full collection scans. I added indexes, fixed that. Then I discovered something worse: **MongoDB's default write concern is not what you think it is**.
+
+By default (at the time), writes were acknowledged before being flushed to disk. I had data loss incidents — not catastrophic, but real. A bot crash during high activity would lose the last few seconds of economy transactions. For a currency system, that's unacceptable.
+
+I also hit the memory problem: MongoDB's WiredTiger storage engine has a minimum 1GB memory footprint. On my 2GB DigitalOcean droplet, MongoDB alone consumed half my available memory.
+
+**What I learned:** "Easy to start with" and "appropriate for production" are different evaluations. I'd chosen a database based on tutorial familiarity, not on the properties I actually needed.
+
+**Duration:** About 14 months.
+
+---
+
+## 3. Redis (2020 — 2021)
+
+**Why I chose it:** I'd read that Redis was fast. My actual requirement was "not MongoDB on 2GB RAM."
+
+**What worked:** Redis is extraordinarily fast for the right workload. Atomic operations — `INCR`, `HINCRBY`, sorted sets for leaderboards — are exactly what a Discord economy needs. No race conditions on atomic increments. No 1GB baseline memory. The 95th percentile latency dropped from ~50ms to under 1ms.
+
+**Why it broke:** Redis is an in-memory data structure store. Persistence is a secondary concern. RDB snapshots might lose up to 5 minutes of data. AOF append-only logging could reconstruct everything, but on a 2GB machine with active writes, the AOF rewrite process would spike memory usage and crash the server.
+
+I lost three days of economy data once. Users were furious. I had backups, but they were 24 hours old.
+
+More fundamentally: Redis doesn't support complex queries. I wanted to generate reports — "top earners this week by channel," "users with balances over X" — and Redis required me to maintain pre-aggregated data structures that I had to update manually. The code became a mess of `ZADD`, `ZINCRBY`, and `ZRANGE` calls scattered throughout every feature.
+
+**What I learned:** In-memory databases require a secondary persistence strategy. Also, Redis is a cache + data structure store, not a primary database. I'd been using it wrong.
+
+**Duration:** About 12 months.
+
+---
+
+## 4. PostgreSQL (2021 — 2023)
+
+**Why I chose it:** I had learned enough to know I wanted ACID guarantees, proper transactions, and SQL. PostgreSQL has a reputation for correctness above all else. I wanted correctness.
+
+**What worked:** Almost everything. The transaction model is exactly right for financial operations. MVCC means reads don't block writes. Constraints enforce invariants at the database level — negative balances are impossible if the column has `CHECK (balance >= 0)`. I stopped having data integrity bugs.
+
+The `psycopg3` async driver was excellent. `asyncpg` was even faster. Connection pooling via PgBouncer solved the "too many connections" problem at scale.
+
+**Why I eventually moved away:** I didn't move away from PostgreSQL for correctness or performance reasons. I moved because of **operational complexity at the edge**.
+
+In 2023, I started working on the mobile web dashboard for Worldwide. It needed to run embedded — users could self-host their own economy instances without a separate database server. PostgreSQL requires a running server process. SQLite doesn't.
+
+Also, my hosting situation changed. The project outgrew a single VPS and I was looking at edge deployments. PostgreSQL doesn't run at the edge.
+
+**What I learned:** PostgreSQL is the right database for almost everything server-side. If you're not sure what database to use, use PostgreSQL. But "right for almost everything" isn't the same as "right for every constraint."
+
+**Duration:** About 2 years, still use it for centralized data.
+
+---
+
+## 5. libSQL (2023 — present)
+
+**Why I chose it:** [Turso](https://turso.tech) built libSQL as an open-source fork of SQLite with replication and edge deployment support. It runs embedded in-process (like SQLite) but also supports replica sync to a primary server.
+
+This is exactly the deployment model I needed: the economy logic runs on the same machine as the Rust service, with in-process SQLite performance, but synced to a central primary for backup and cross-instance reads.
+
+**What works:**
+- Embedded mode is genuinely fast — no network round-trips for local reads
+- The Rust SDK (`libsql` crate) integrates directly with Axum
+- SQLite's write-ahead logging gives you decent concurrent read performance
+- Migration from PostgreSQL was straightforward — SQLite supports most of PostgreSQL's syntax
+
+**Current limitations I'm working around:**
+- No `LISTEN/NOTIFY` equivalent — I'm polling for replication lag instead
+- Limited concurrent writes (SQLite's single-writer model) — mitigation: serialized write queue in the Rust layer
+- The replication sync can fall behind under write spikes; I've built circuit breakers around read replicas to fall back to primary
+
+**Duration:** 1.5 years and continuing.
+
+---
+
+## 6. Custom cache layer (2022 — present)
+
+This one isn't really a database — it's an in-memory cache in front of everything else. But it earned its place on this list because building it taught me the most.
+
+**Why it exists:** The Discord bot queries the same data constantly. Every message in a channel triggers a check of the user's economy state. At 10,000+ daily active users, that's potentially hundreds of thousands of database reads per day for data that changes infrequently.
+
+I wrote a simple LRU cache in Rust — bounded by entry count, TTL-based expiry, explicit invalidation on write. It's about 200 lines of code.
+
+```rust
+pub struct Cache<K, V> {
+    store: HashMap<K, CacheEntry<V>>,
+    capacity: usize,
+    ttl: Duration,
+}
+
+struct CacheEntry<V> {
+    value: V,
+    inserted_at: Instant,
+    last_accessed: Instant,
+}
+```
+
+**What I learned building it:** Caching is about *defining your consistency requirements*, not about performance. The performance is a consequence of relaxing consistency. The real decision is: for how long is stale data acceptable? For balance reads in a game context, 30 seconds is fine. For a transaction confirmation, zero seconds is required.
+
+I cache reads but never writes. Writes go directly to the database and invalidate the cache entry. This is a simple rule that prevents an entire class of bugs.
+
+---
+
+## The Through-Line
+
+Looking back at these migrations, each one was caused by the same failure mode: **I was using a database for a property it didn't provide, and discovered that the hard way**.
+
+JSON didn't provide atomicity. MongoDB didn't provide durability guarantees I thought it had. Redis didn't provide the persistence I needed for a primary store. PostgreSQL provided everything, but not the embedded deployment model I later needed.
+
+The lesson isn't "learn all databases before you start." That's not how learning works. The lesson is: **know what properties your system requires, then verify your database provides them**. Atomicity, durability, consistency, isolation — these aren't abstract CS concepts, they're the specific things that break in production.
+
+I now ask these questions before choosing any data store:
+1. What's the maximum acceptable data loss? (Recovery point objective)
+2. What consistency guarantees do the operations require?
+3. What does failure look like, and is it detectable?
+4. What's the operational overhead at my scale and hosting constraints?
+
+Answer those four questions, and the database choice usually becomes obvious.

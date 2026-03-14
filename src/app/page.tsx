@@ -5,6 +5,8 @@ import StackStrip from '@/components/home/StackStrip'
 import ValueProps from '@/components/home/ValueProps'
 import WorldwideTeaser from '@/components/home/WorldwideTeaser'
 import PatternPursuitTeaser from '@/components/home/PatternPursuitTeaser'
+import JourneySection from '@/components/home/JourneySection'
+import ContactSection from '@/components/home/ContactSection'
 
 export async function generateMetadata(): Promise<Metadata> {
   const stats = await getServerStats()
@@ -31,6 +33,10 @@ export default async function HomePage() {
       <WorldwideTeaser stats={stats} />
       <hr className="divider" />
       <PatternPursuitTeaser />
+      <hr className="divider" />
+      <JourneySection />
+      <hr className="divider" />
+      <ContactSection memberCount={stats.memberCountFormatted} />
     </>
   )
 }

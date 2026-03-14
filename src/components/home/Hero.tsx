@@ -47,7 +47,7 @@ export default function Hero({ stats }: HeroProps) {
         <Link href="/worldwide" className={styles.btnPrimary}>
           See the Work
         </Link>
-        <Link href="/about" className={styles.btnGhost}>
+        <Link href="/#journey" className={styles.btnGhost}>
           My Story
         </Link>
       </motion.div>
