@@ -1,0 +1,139 @@
+/* ─── Design Tokens ─────────────────────────────────────────────────────── */
+:root {
+  /* Colours */
+  --bg:       #0a0a0a;
+  --surface:  #111111;
+  --surface2: #1a1a1a;
+  --border:   #2a2a2a;
+  --accent:   #e87c3a;
+  --accent2:  #3ae8b4;
+  --text:           #e8e4dc;
+  --text-secondary: #b0aba3;
+  --muted:          #888888;
+
+  /* Language / tech colours */
+  --rust:   #b7410e;
+  --python: #3572a5;
+  --next:   #e8e4dc;
+
+  /* Typography */
+  --font-heading: var(--font-space-mono), 'Space Mono', monospace;
+  --font-body:    var(--font-lora), 'Lora', serif;
+  --font-mono:    var(--font-jetbrains), 'JetBrains Mono', monospace;
+
+  /* Spacing scale */
+  --space-xs:  0.25rem;
+  --space-sm:  0.5rem;
+  --space-md:  1rem;
+  --space-lg:  2rem;
+  --space-xl:  4rem;
+  --space-2xl: 8rem;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  /* Transitions */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration: 200ms;
+}
+
+/* ─── Reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  min-height: 100dvh;
+}
+
+/* ─── Typography defaults ────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+p {
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+code, pre {
+  font-family: var(--font-mono);
+}
+
+/* ─── Utility classes ────────────────────────────────────────────────────── */
+.accent   { color: var(--accent); }
+.accent2  { color: var(--accent2); }
+.muted    { color: var(--muted); }
+.mono     { font-family: var(--font-mono); }
+
+/* ─── Section wrapper ────────────────────────────────────────────────────── */
+.section {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 3rem var(--space-md);
+  }
+}
+
+/* ─── Divider ────────────────────────────────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* ─── Callout box (orange annotation style) ──────────────────────────────── */
+.callout {
+  background: rgba(232, 124, 58, 0.06);
+  border: 1px solid rgba(232, 124, 58, 0.25);
+  border-left: 3px solid var(--accent);
+  padding: 1rem 1.25rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 1.5rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.callout strong {
+  color: var(--accent);
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ─── Focus visible ──────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
