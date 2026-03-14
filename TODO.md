@@ -1,20 +1,12 @@
 # drlove.dev — TODO
 
-## SEO & Infrastructure
+All previous tasks complete. `pnpm build` exits 0. Site deploys to GitHub Pages on push to `main`.
 
-- [ ] `public/sitemap.xml` — or generate via Next.js
-- [ ] `public/robots.txt`
-- [ ] OpenGraph image (`/public/og-image.png`) — dark card with name + tagline
-- [ ] Favicon / apple-touch-icon in `/public/`
-- [ ] JSON-LD structured data (Person schema) in layout.tsx
-- [ ] Canonical URL meta tags (already handled via metadataBase, verify)
+## Post-launch checks (manual)
 
-## Components & UI
-
-- [ ] Mobile navigation — hamburger menu for <640px (Nav.tsx truncates at 4 links)
-- [ ] Scroll-to-top button (long pages like /worldwide)
-
-## Deployment (GitHub Pages)
-
-- [ ] GitHub Actions workflow: `pnpm build` → deploy `out/` to GitHub Pages
-- [ ] Verify everything works correctly in production (links, images, SEO tags, etc.)
+- [ ] Set `DISCORD_BOT_TOKEN` + `DISCORD_GUILD_ID` secrets in GitHub repo settings
+- [ ] Verify OG image renders correctly on Discord / Twitter / LinkedIn (SVG support varies)
+- [ ] Consider generating a static PNG OG image if SVG preview is unsupported by a platform
+- [ ] Add `apple-touch-icon.png` (180x180 PNG) to `/public/` for iOS home screen
+- [ ] Test hamburger nav on real mobile device
+- [ ] Verify sitemap is indexed in Google Search Console after deploy
