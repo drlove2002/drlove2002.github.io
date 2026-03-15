@@ -34,7 +34,7 @@ const jsonLd = {
   alternateName: 'drlove',
   url: 'https://drlove.dev',
   email: 'sudiproy20yo@gmail.com',
-  image: 'https://drlove.dev/og-image.svg',
+  image: 'https://drlove.dev/pfp.png',
   jobTitle: 'Software Engineer',
   description:
     'Systems engineer from West Bengal, India. Co-founder of Worldwide Discord (50k members). Backend engineer specialising in Rust, Python, and distributed systems.',
@@ -82,9 +82,15 @@ export const metadata: Metadata = {
   authors: [{ name: 'Sudip Roy', url: 'https://drlove.dev' }],
   creator: 'Sudip Roy',
   icons: {
-    icon: '/favicon.svg',
-    shortcut: '/favicon.svg',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
+  manifest: '/site.webmanifest',
   openGraph: {
     type: 'website',
     locale: 'en_US',
