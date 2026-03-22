@@ -1,8 +1,8 @@
 ---
-title: "Six Databases in Five Years — A Story of Real Failures"
-description: "JSON → MongoDB → Redis → PostgreSQL → libSQL → custom cache. Each migration had a reason."
-tag: "Databases"
-date: "2025-02-20"
+title: Six Databases in Five Years — A Story of Real Failures
+description: JSON → MongoDB → Redis → PostgreSQL → custom cache → libSQL Each migration had a reason.
+tag: Databases
+date: 2025-02-20
 ---
 
 Every database I've ever used taught me something the previous one couldn't. This is the honest story of six migrations over five years — what broke, what I chose next, and why. No benchmarks. Just real decisions under real constraints.
@@ -29,29 +29,24 @@ with open('economy.json', 'w') as f:
 
 ---
 
-## 2. MongoDB (2019 — 2020)
+## 2. MongoDB (2019 — 2022)
 
-**Why I chose it:** The Discord.py tutorial I found used it. Motor (the async MongoDB driver) integrated cleanly. It felt professional.
+**Why I chose it:** I followed a Discord.py tutorial that used it. **Motor** (the async driver) integrated cleanly, and the whole setup just felt "professional" at the time.
+  
+**What worked:** The document model was a natural fit for Discord's data. Since users and servers are essentially documents, I didn't have to worry about schema migrations. When I needed to add new fields to a rapidly evolving bot, I just added them—no friction.
 
-**What worked:** The document model fit Discord's data naturally. A user is a document. A server is a document. No schema migrations when I added new fields — just add them. For a rapidly evolving bot, that was genuinely useful.
-
-**Why it broke:** I didn't understand indexes. At 5,000 users, queries that had been instant started taking 200-500ms because I was doing full collection scans. I added indexes, fixed that. Then I discovered something worse: **MongoDB's default write concern is not what you think it is**.
-
-By default (at the time), writes were acknowledged before being flushed to disk. I had data loss incidents — not catastrophic, but real. A bot crash during high activity would lose the last few seconds of economy transactions. For a currency system, that's unacceptable.
-
-I also hit the memory problem: MongoDB's WiredTiger storage engine has a minimum 1GB memory footprint. On my 2GB DigitalOcean droplet, MongoDB alone consumed half my available memory.
-
-**What I learned:** "Easy to start with" and "appropriate for production" are different evaluations. I'd chosen a database based on tutorial familiarity, not on the properties I actually needed.
-
+**Why it broke:** I didn't understand **indexing**. Once I hit 5,000 users, queries that used to be instant spiked to 200–500ms. Plus, I was using a free MongoDB tier hosted in a different region than my bot, which added massive network latency. It quickly became my primary bottleneck.  
+**What I learned:** "Easy to start" and "production-ready" are two very different things. I realised I had chosen a database based on tutorial familiarity rather than the specific performance needs of my project.
+  
 **Duration:** About 14 months.
 
 ---
 
-## 3. Redis (2020 — 2021)
+## 3. Redis (2022 — 2026)
 
-**Why I chose it:** I'd read that Redis was fast. My actual requirement was "not MongoDB on 2GB RAM."
+**Why I chose it:** I'd read that Redis was fast. My actual requirement was "not MongoDB with 300ms delay"
 
-**What worked:** Redis is extraordinarily fast for the right workload. Atomic operations — `INCR`, `HINCRBY`, sorted sets for leaderboards — are exactly what a Discord economy needs. No race conditions on atomic increments. No 1GB baseline memory. The 95th percentile latency dropped from ~50ms to under 1ms.
+**What worked:** Redis is extraordinarily fast for the write workload. Atomic operations — `INCR`, `HINCRBY`, sorted sets for leaderboards — are exactly what a Discord economy needs. No race conditions on atomic increments. No 1GB baseline memory footprint. The latency dropped from ~300ms to under 1ms 🤯.
 
 **Why it broke:** Redis is an in-memory data structure store. Persistence is a secondary concern. RDB snapshots might lose up to 5 minutes of data. AOF append-only logging could reconstruct everything, but on a 2GB machine with active writes, the AOF rewrite process would spike memory usage and crash the server.
 
@@ -65,48 +60,23 @@ More fundamentally: Redis doesn't support complex queries. I wanted to generate 
 
 ---
 
-## 4. PostgreSQL (2021 — 2023)
+## 4. PostgreSQL (2023 — present)
 
-**Why I chose it:** I had learned enough to know I wanted ACID guarantees, proper transactions, and SQL. PostgreSQL has a reputation for correctness above all else. I wanted correctness.
-
-**What worked:** Almost everything. The transaction model is exactly right for financial operations. MVCC means reads don't block writes. Constraints enforce invariants at the database level — negative balances are impossible if the column has `CHECK (balance >= 0)`. I stopped having data integrity bugs.
-
-The `psycopg3` async driver was excellent. `asyncpg` was even faster. Connection pooling via PgBouncer solved the "too many connections" problem at scale.
-
-**Why I eventually moved away:** I didn't move away from PostgreSQL for correctness or performance reasons. I moved because of **operational complexity at the edge**.
-
-In 2023, I started working on the mobile web dashboard for Worldwide. It needed to run embedded — users could self-host their own economy instances without a separate database server. PostgreSQL requires a running server process. SQLite doesn't.
-
-Also, my hosting situation changed. The project outgrew a single VPS and I was looking at edge deployments. PostgreSQL doesn't run at the edge.
-
-**What I learned:** PostgreSQL is the right database for almost everything server-side. If you're not sure what database to use, use PostgreSQL. But "right for almost everything" isn't the same as "right for every constraint."
-
-**Duration:** About 2 years, still use it for centralized data.
+**Why I chose it:** Honestly, I would’ve never chosen SQL on my own; I’d been brainwashed by the social media narrative that everyone was moving to NoSQL. But I was somewhat forced to learn it through my B.Sc. curriculum. Despite my usual skepticism of the education system, those classes made me realize how powerful SQL actually is. I wanted ACID guarantees, proper transactions, and the kind of "correctness" PostgreSQL is famous for.
+  
+**What worked:** Almost everything. The transaction model is perfect for financial operations, and constraints enforce rules at the database level—like making negative balances impossible with a simple `CHECK` constraint. My favorite discovery was **cascading deletes**: you delete one user, and the DB automatically wipes all their related data. It saved me from writing a ton of messy manual code checks. With **MVCC**, reads don't block writes, and using **asyncpg** or **PgBouncer** kept things lightning-fast at scale. I effectively stopped having data integrity bugs.
+  
+**Why I eventually moved away:** I actually never left SQL per se, but I started looking for a better balance between data integrity and pure write speed. Even with Postgres, I needed sub-millisecond writes for things like user message counts and virtual currency accounting. I didn't want to sacrifice the "correctness" I'd grown to love, but I needed an alternative that could handle that specific high-frequency pressure more efficiently.
+  
+**What I learned:** PostgreSQL is the right choice for almost everything server-side. If you aren't sure what to use, use Postgres. But I learned that "right for almost everything" isn't the same as "right for every specific constraint."
+  
+**Duration:** About 2 years (and I still use it for centralized data).
 
 ---
 
-## 5. libSQL (2023 — present)
-
-**Why I chose it:** [Turso](https://turso.tech) built libSQL as an open-source fork of SQLite with replication and edge deployment support. It runs embedded in-process (like SQLite) but also supports replica sync to a primary server.
-
-This is exactly the deployment model I needed: the economy logic runs on the same machine as the Rust service, with in-process SQLite performance, but synced to a central primary for backup and cross-instance reads.
-
-**What works:**
-- Embedded mode is genuinely fast — no network round-trips for local reads
-- The Rust SDK (`libsql` crate) integrates directly with Axum
-- SQLite's write-ahead logging gives you decent concurrent read performance
-- Migration from PostgreSQL was straightforward — SQLite supports most of PostgreSQL's syntax
-
-**Current limitations I'm working around:**
-- No `LISTEN/NOTIFY` equivalent — I'm polling for replication lag instead
-- Limited concurrent writes (SQLite's single-writer model) — mitigation: serialized write queue in the Rust layer
-- The replication sync can fall behind under write spikes; I've built circuit breakers around read replicas to fall back to primary
-
-**Duration:** 1.5 years and continuing.
-
 ---
 
-## 6. Custom cache layer (2022 — present)
+## 5. Custom cache layer (2024 — present)
 
 This one isn't really a database — it's an in-memory cache in front of everything else. But it earned its place on this list because building it taught me the most.
 
@@ -114,7 +84,7 @@ This one isn't really a database — it's an in-memory cache in front of everyth
 
 I wrote a simple LRU cache in Rust — bounded by entry count, TTL-based expiry, explicit invalidation on write. It's about 200 lines of code.
 
-```rust
+```rs
 pub struct Cache<K, V> {
     store: HashMap<K, CacheEntry<V>>,
     capacity: usize,
@@ -128,9 +98,49 @@ struct CacheEntry<V> {
 }
 ```
 
-**What I learned building it:** Caching is about *defining your consistency requirements*, not about performance. The performance is a consequence of relaxing consistency. The real decision is: for how long is stale data acceptable? For balance reads in a game context, 30 seconds is fine. For a transaction confirmation, zero seconds is required.
+I wrote a custom scheduler to track events and call at expiry. It's a little complex but with the help of AI It was quite easy to implement (What? I can't use AI? I'll do whatever is needed for productivity 😉).
+
+```rs
+pub(super) struct SchedulerInner {
+    pub(super) index: HashMap<String, TimerEntry>, // as_key() -> entry
+    pub(super) wheel: BTreeMap<i64, Vec<String>>,
+    /// Events fired but not yet sent to any subscriber channel.
+    pub(super) pending: VecDeque<FiredEvent>,
+    /// Events fired but not yet acked by Python. Keyed by payload.
+    /// Survives subscriber reconnects — re-delivered on every new Subscribe call.
+    pub(super) delivering: HashMap<String, FiredEvent>,
+    pub(super) tx: Option<mpsc::Sender<FiredEvent>>,
+    pub(super) db: PostgresClient,
+    pub(super) notify: Arc<Notify>,
+}
+```
+
+**What I learned building it:** Caching is about *defining your consistency requirements*, not about performance. The performance is a consequence of relaxing consistency. The real decision is: for how long is stale data acceptable? For balance reads in a long running game context, 30 seconds is fine. For a transaction confirmation, zero seconds is required.
 
 I cache reads but never writes. Writes go directly to the database and invalidate the cache entry. This is a simple rule that prevents an entire class of bugs.
+
+**Duration:** 1.5 years and continuing.
+
+---
+Here is the refined version. I’ve kept your technical details while smoothing out the "future-leaning" perspective to make it sound like a proactive choice for your current stack.
+
+---
+
+## 6. libSQL (Present & Future)
+
+**Why I chose it:** I haven't moved away from `SQL + Custom Cache`, but I need a better balance between **data integrity** and **raw write speed**. Specifically, I needed sub-millisecond writes for things like message counts and virtual currency accounting. **Turso** built libSQL as an open-source SQLite fork that supports replication and edge deployment. It runs embedded in-process but syncs to a primary server—the exact deployment model I was looking for.
+  
+**What works:**
+
+- **In-process speed:** Since it's embedded, there are zero network round-trips for local reads.
+- **Tech Stack:** The `libsql` Rust crate integrates directly with **Axum**.
+- **Performance:** SQLite’s Write-Ahead Logging (WAL) provides solid concurrent read performance, and migrating from PostgreSQL was surprisingly easy since the syntax is so similar.
+
+**Current limitations & workarounds:**
+
+- **No LISTEN/NOTIFY:** I’m currently using my own custom scheduler as a substitute.
+- **Single-writer model:** To handle SQLite's concurrent write limits, I’ve implemented a **serialized write queue** in the Rust layer.
+- **Sync Lag:** Under heavy write spikes, replication can fall behind, so I’m thinking of building **circuit breakers** to fall back from replicas to the primary when needed.
 
 ---
 
@@ -138,11 +148,12 @@ I cache reads but never writes. Writes go directly to the database and invalidat
 
 Looking back at these migrations, each one was caused by the same failure mode: **I was using a database for a property it didn't provide, and discovered that the hard way**.
 
-JSON didn't provide atomicity. MongoDB didn't provide durability guarantees I thought it had. Redis didn't provide the persistence I needed for a primary store. PostgreSQL provided everything, but not the embedded deployment model I later needed.
+JSON didn't provide atomicity. MongoDB didn't provide durability guarantees I thought it had. Redis didn't provide the persistence I needed for a primary store. PostgreSQL provided everything, but not the embedded deployment model I later needed for more speed.
 
 The lesson isn't "learn all databases before you start." That's not how learning works. The lesson is: **know what properties your system requires, then verify your database provides them**. Atomicity, durability, consistency, isolation — these aren't abstract CS concepts, they're the specific things that break in production.
 
 I now ask these questions before choosing any data store:
+
 1. What's the maximum acceptable data loss? (Recovery point objective)
 2. What consistency guarantees do the operations require?
 3. What does failure look like, and is it detectable?
