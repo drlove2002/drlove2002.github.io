@@ -1,6 +1,6 @@
 import type { IconType } from 'react-icons'
 import { FaXTwitter } from 'react-icons/fa6'
-import { FiMail, FiGithub, FiLinkedin, FiMessageCircle, FiBookOpen } from 'react-icons/fi'
+import { FiMail, FiGithub, FiLinkedin, FiMessageCircle, FiBookOpen, FiFileText } from 'react-icons/fi'
 import SectionLabel from '@/components/ui/SectionLabel'
 import styles from './ContactSection.module.css'
 
@@ -38,6 +38,14 @@ function getContacts(memberCount: string): Contact[] {
       icon: FiLinkedin,
       color: '#5b9bd5',
       note: null,
+    },
+    {
+      type: 'Resume',
+      value: 'ATS CV (PDF)',
+      href: '/resume.pdf',
+      icon: FiFileText,
+      color: 'var(--accent)',
+      note: 'General one-page CV for recruiter and ATS screening.',
     },
     {
       type: 'Discord Community',
