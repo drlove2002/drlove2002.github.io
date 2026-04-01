@@ -63,11 +63,11 @@ const jsonLd = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://drlove.dev'),
   title: {
-    default: 'Sudip Roy — drlove',
+    default: 'Sudip Roy - drlove',
     template: '%s · drlove.dev',
   },
   description:
-    'Sudip Roy (drlove) — CS student from West Bengal building systems at scale. Co-owner of Worldwide Discord (50k members), multi-language backend engineer, aspiring CTO.',
+    'Sudip Roy (drlove) - CS student from West Bengal building systems at scale. Co-owner of Worldwide Discord (50k members), multi-language backend engineer, aspiring CTO.',
   keywords: [
     'Sudip Roy',
     'drlove',
@@ -96,7 +96,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://drlove.dev',
     siteName: 'drlove.dev',
-    title: 'Sudip Roy — drlove',
+    title: 'Sudip Roy - drlove',
     description:
       'Systems engineer. Built a Discord bot serving 50k members over 5 years. Python + Rust + gRPC + libSQL.',
     images: [
@@ -104,13 +104,13 @@ export const metadata: Metadata = {
         url: '/og-image.svg',
         width: 1200,
         height: 630,
-        alt: 'Sudip Roy — drlove.dev — I build systems people live inside.',
+        alt: 'Sudip Roy - drlove.dev - I build systems people live inside.',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Sudip Roy — drlove',
+    title: 'Sudip Roy - drlove',
     description: 'Systems engineer. Built infrastructure that 50k people live inside.',
     images: ['/og-image.svg'],
   },

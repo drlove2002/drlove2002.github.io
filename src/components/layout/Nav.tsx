@@ -49,7 +49,7 @@ export default function Nav() {
         ))}
       </ul>
 
-      {/* Hamburger button — mobile only */}
+      {/* Hamburger button - mobile only */}
       <button
         className={styles.hamburger}
         aria-label={open ? 'Close menu' : 'Open menu'}

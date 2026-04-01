@@ -26,7 +26,7 @@ export default function PatternPursuitTeaser() {
         </h2>
         <p className={styles.sub}>
           An interactive prediction game built on 5-gram language models. Players
-          compete against the model in real time — and the model learns.
+          compete against the model in real time - and the model learns.
         </p>
         <div className={styles.chipRow} role="list" aria-label="Technologies used">
           <Chip label="Rust · Actix" variant="rust" tooltip="Backend API and game logic" />

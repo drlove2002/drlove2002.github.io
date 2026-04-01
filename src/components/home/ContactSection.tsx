@@ -29,7 +29,7 @@ function getContacts(memberCount: string): Contact[] {
       href: 'https://github.com/drlove2002',
       icon: FiGithub,
       color: '#e8e4dc',
-      note: 'Personal account. Worldwide org repos are private (IP protection) — architecture documented in the case study.',
+      note: 'Personal account. Worldwide org repos are private (IP protection) - architecture documented in the case study.',
     },
     {
       type: 'LinkedIn',
@@ -57,11 +57,11 @@ function getContacts(memberCount: string): Contact[] {
     },
     {
       type: 'Case Study',
-      value: 'Worldwide — Full Breakdown',
+      value: 'Worldwide - Full Breakdown',
       href: '/worldwide',
       icon: FiBookOpen,
       color: 'var(--accent2)',
-      note: 'Architecture, economy design, incidents — the whole story.',
+      note: 'Architecture, economy design, incidents - the whole story.',
     },
   ]
 }

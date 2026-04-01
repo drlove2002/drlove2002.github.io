@@ -26,7 +26,7 @@ export default function JourneySection() {
       <SectionLabel>The Person</SectionLabel>
       <h2 className={styles.heading}>The story so far.</h2>
       <p className={styles.intro}>
-        I&apos;m Sudip Roy — systems engineer from West Bengal, India.
+        I&apos;m Sudip Roy - systems engineer from West Bengal, India.
         I go by <span className={styles.handle}>drlove</span> online.
         I build things because I need them to exist, then scale them until they can&apos;t be ignored.
       </p>

@@ -13,7 +13,7 @@ export default function Chip({ label, variant = 'default', tooltip }: ChipProps)
     <span
       className={`${styles.chip} ${styles[variant]}`}
       title={tooltip}
-      aria-label={tooltip ? `${label} — ${tooltip}` : label}
+      aria-label={tooltip ? `${label} - ${tooltip}` : label}
     >
       {label}
     </span>

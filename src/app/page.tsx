@@ -11,10 +11,10 @@ import ContactSection from '@/components/home/ContactSection'
 export async function generateMetadata(): Promise<Metadata> {
   const stats = await getServerStats()
   return {
-    title: 'Sudip Roy — drlove',
-    description: `Systems engineer from West Bengal. Built Worldwide — a Discord community of ${stats.memberCountFormatted} with a virtual economy, Python/Rust/gRPC stack, and 6 databases over 5 years.`,
+    title: 'Sudip Roy - drlove',
+    description: `Systems engineer from West Bengal. Built Worldwide - a Discord community of ${stats.memberCountFormatted} with a virtual economy, Python/Rust/gRPC stack, and 6 databases over 5 years.`,
     openGraph: {
-      title: 'Sudip Roy — drlove',
+      title: 'Sudip Roy - drlove',
       description: 'I build systems people live inside.',
       url: 'https://drlove.dev',
     },

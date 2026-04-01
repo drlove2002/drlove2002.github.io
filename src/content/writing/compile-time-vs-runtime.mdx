@@ -1,22 +1,22 @@
 ---
 title: "Compile Time vs Runtime: The Tradeoff Nobody Talks About"
-description: "Rust shifts responsibility from the runtime to the developer. That's not free — but the payoff is worth it."
+description: "Rust shifts responsibility from the runtime to the developer. That's not free - but the payoff is worth it."
 tag: "Systems"
 date: "2025-06-10"
 ---
 
 People will eventually realize that doing everything at compile time is much more complex than doing it at runtime.
 
-In Python, the runtime makes decisions for you — dynamic typing, garbage collection, duck typing. It's flexible. It's forgiving. It's also slow, because every decision costs cycles at execution time.
+In Python, the runtime makes decisions for you - dynamic typing, garbage collection, duck typing. It's flexible. It's forgiving. It's also slow, because every decision costs cycles at execution time.
 
-In Rust, those decisions happen at compile time. The borrow checker, lifetimes, ownership — they're the compiler forcing you to think about things Python lets you ignore. The result? A massive performance boost. No GC pauses. No surprise allocations. No "it works on my machine" memory bugs.
+In Rust, those decisions happen at compile time. The borrow checker, lifetimes, ownership - they're the compiler forcing you to think about things Python lets you ignore. The result? A massive performance boost. No GC pauses. No surprise allocations. No "it works on my machine" memory bugs.
 
 But here's the part people skip: **that complexity doesn't disappear.** It moves from the runtime to *you*. You're the captain now, not the compiler.
 
-The borrow checker isn't fighting you. It's showing you problems that always existed — you just never had to deal with them before. Every lifetime annotation, every ownership transfer, every `Clone` you reluctantly add — that's the cost of correctness.
+The borrow checker isn't fighting you. It's showing you problems that always existed - you just never had to deal with them before. Every lifetime annotation, every ownership transfer, every `Clone` you reluctantly add - that's the cost of correctness.
 
 Replace runtime errors with compile-time errors. That's not just an advantage. That's a public service.
 
-The tradeoff is real: Rust code takes longer to write, longer to compile, and longer to get past the compiler. But once it compiles, it *works*. Not "works until someone sends a weird request at 3AM" — actually works.
+The tradeoff is real: Rust code takes longer to write, longer to compile, and longer to get past the compiler. But once it compiles, it *works*. Not "works until someone sends a weird request at 3AM" - actually works.
 
 For a system handling real money for 50,000 users, that tradeoff isn't even close.

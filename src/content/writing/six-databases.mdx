@@ -1,13 +1,13 @@
 ---
-title: Six Databases in Five Years — A Story of Real Failures
+title: Six Databases in Five Years - A Story of Real Failures
 description: JSON → MongoDB → Redis → PostgreSQL → custom cache → libSQL Each migration had a reason.
 tag: Databases
 date: 2025-02-20
 ---
 
-Every database I've ever used taught me something the previous one couldn't. This is the honest story of six migrations over five years — what broke, what I chose next, and why. No benchmarks. Just real decisions under real constraints.
+Every database I've ever used taught me something the previous one couldn't. This is the honest story of six migrations over five years - what broke, what I chose next, and why. No benchmarks. Just real decisions under real constraints.
 
-## 1. JSON files (2019 — 2019)
+## 1. JSON files (2019 - 2019)
 
 **Why I started here:** I didn't know databases existed. I was 17, building my first Discord bot in Python, and `json.dump()` was the only persistence I knew.
 
@@ -29,11 +29,11 @@ with open('economy.json', 'w') as f:
 
 ---
 
-## 2. MongoDB (2019 — 2022)
+## 2. MongoDB (2019 - 2022)
 
 **Why I chose it:** I followed a Discord.py tutorial that used it. **Motor** (the async driver) integrated cleanly, and the whole setup just felt "professional" at the time.
   
-**What worked:** The document model was a natural fit for Discord's data. Since users and servers are essentially documents, I didn't have to worry about schema migrations. When I needed to add new fields to a rapidly evolving bot, I just added them—no friction.
+**What worked:** The document model was a natural fit for Discord's data. Since users and servers are essentially documents, I didn't have to worry about schema migrations. When I needed to add new fields to a rapidly evolving bot, I just added them. No friction.
 
 **Why it broke:** I didn't understand **indexing**. Once I hit 5,000 users, queries that used to be instant spiked to 200–500ms. Plus, I was using a free MongoDB tier hosted in a different region than my bot, which added massive network latency. It quickly became my primary bottleneck.  
 **What I learned:** "Easy to start" and "production-ready" are two very different things. I realised I had chosen a database based on tutorial familiarity rather than the specific performance needs of my project.
@@ -42,17 +42,17 @@ with open('economy.json', 'w') as f:
 
 ---
 
-## 3. Redis (2022 — 2026)
+## 3. Redis (2022 - 2026)
 
 **Why I chose it:** I'd read that Redis was fast. My actual requirement was "not MongoDB with 300ms delay"
 
-**What worked:** Redis is extraordinarily fast for the write workload. Atomic operations — `INCR`, `HINCRBY`, sorted sets for leaderboards — are exactly what a Discord economy needs. No race conditions on atomic increments. No 1GB baseline memory footprint. The latency dropped from ~300ms to under 1ms 🤯.
+**What worked:** Redis is extraordinarily fast for the write workload. Atomic operations - `INCR`, `HINCRBY`, sorted sets for leaderboards - are exactly what a Discord economy needs. No race conditions on atomic increments. No 1GB baseline memory footprint. The latency dropped from ~300ms to under 1ms 🤯.
 
 **Why it broke:** Redis is an in-memory data structure store. Persistence is a secondary concern. RDB snapshots might lose up to 5 minutes of data. AOF append-only logging could reconstruct everything, but on a 2GB machine with active writes, the AOF rewrite process would spike memory usage and crash the server.
 
 I lost three days of economy data once. Users were furious. I had backups, but they were 24 hours old.
 
-More fundamentally: Redis doesn't support complex queries. I wanted to generate reports — "top earners this week by channel," "users with balances over X" — and Redis required me to maintain pre-aggregated data structures that I had to update manually. The code became a mess of `ZADD`, `ZINCRBY`, and `ZRANGE` calls scattered throughout every feature.
+More fundamentally: Redis doesn't support complex queries. I wanted to generate reports - "top earners this week by channel," "users with balances over X" - and Redis required me to maintain pre-aggregated data structures that I had to update manually. The code became a mess of `ZADD`, `ZINCRBY`, and `ZRANGE` calls scattered throughout every feature.
 
 **What I learned:** In-memory databases require a secondary persistence strategy. Also, Redis is a cache + data structure store, not a primary database. I'd been using it wrong.
 
@@ -60,11 +60,11 @@ More fundamentally: Redis doesn't support complex queries. I wanted to generate 
 
 ---
 
-## 4. PostgreSQL (2023 — present)
+## 4. PostgreSQL (2023 - present)
 
 **Why I chose it:** Honestly, I would’ve never chosen SQL on my own; I’d been brainwashed by the social media narrative that everyone was moving to NoSQL. But I was somewhat forced to learn it through my B.Sc. curriculum. Despite my usual skepticism of the education system, those classes made me realize how powerful SQL actually is. I wanted ACID guarantees, proper transactions, and the kind of "correctness" PostgreSQL is famous for.
   
-**What worked:** Almost everything. The transaction model is perfect for financial operations, and constraints enforce rules at the database level—like making negative balances impossible with a simple `CHECK` constraint. My favorite discovery was **cascading deletes**: you delete one user, and the DB automatically wipes all their related data. It saved me from writing a ton of messy manual code checks. With **MVCC**, reads don't block writes, and using **asyncpg** or **PgBouncer** kept things lightning-fast at scale. I effectively stopped having data integrity bugs.
+**What worked:** Almost everything. The transaction model is perfect for financial operations, and constraints enforce rules at the database level, like making negative balances impossible with a simple `CHECK` constraint. My favorite discovery was **cascading deletes**: you delete one user, and the DB automatically wipes all their related data. It saved me from writing a ton of messy manual code checks. With **MVCC**, reads don't block writes, and using **asyncpg** or **PgBouncer** kept things lightning-fast at scale. I effectively stopped having data integrity bugs.
   
 **Why I eventually moved away:** I actually never left SQL per se, but I started looking for a better balance between data integrity and pure write speed. Even with Postgres, I needed sub-millisecond writes for things like user message counts and virtual currency accounting. I didn't want to sacrifice the "correctness" I'd grown to love, but I needed an alternative that could handle that specific high-frequency pressure more efficiently.
   
@@ -76,13 +76,13 @@ More fundamentally: Redis doesn't support complex queries. I wanted to generate 
 
 ---
 
-## 5. Custom cache layer (2024 — present)
+## 5. Custom cache layer (2024 - present)
 
-This one isn't really a database — it's an in-memory cache in front of everything else. But it earned its place on this list because building it taught me the most.
+This one isn't really a database - it's an in-memory cache in front of everything else. But it earned its place on this list because building it taught me the most.
 
 **Why it exists:** The Discord bot queries the same data constantly. Every message in a channel triggers a check of the user's economy state. At 10,000+ daily active users, that's potentially hundreds of thousands of database reads per day for data that changes infrequently.
 
-I wrote a simple LRU cache in Rust — bounded by entry count, TTL-based expiry, explicit invalidation on write. It's about 200 lines of code.
+I wrote a simple LRU cache in Rust - bounded by entry count, TTL-based expiry, explicit invalidation on write. It's about 200 lines of code.
 
 ```rs
 pub struct Cache<K, V> {
@@ -107,7 +107,7 @@ pub(super) struct SchedulerInner {
     /// Events fired but not yet sent to any subscriber channel.
     pub(super) pending: VecDeque<FiredEvent>,
     /// Events fired but not yet acked by Python. Keyed by payload.
-    /// Survives subscriber reconnects — re-delivered on every new Subscribe call.
+    /// Survives subscriber reconnects - re-delivered on every new Subscribe call.
     pub(super) delivering: HashMap<String, FiredEvent>,
     pub(super) tx: Option<mpsc::Sender<FiredEvent>>,
     pub(super) db: PostgresClient,
@@ -128,7 +128,7 @@ Here is the refined version. I’ve kept your technical details while smoothing 
 
 ## 6. libSQL (Present & Future)
 
-**Why I chose it:** I haven't moved away from `SQL + Custom Cache`, but I need a better balance between **data integrity** and **raw write speed**. Specifically, I needed sub-millisecond writes for things like message counts and virtual currency accounting. **Turso** built libSQL as an open-source SQLite fork that supports replication and edge deployment. It runs embedded in-process but syncs to a primary server—the exact deployment model I was looking for.
+**Why I chose it:** I haven't moved away from `SQL + Custom Cache`, but I need a better balance between **data integrity** and **raw write speed**. Specifically, I needed sub-millisecond writes for things like message counts and virtual currency accounting. **Turso** built libSQL as an open-source SQLite fork that supports replication and edge deployment. It runs embedded in-process but syncs to a primary server, the exact deployment model I was looking for.
   
 **What works:**
 
@@ -150,7 +150,7 @@ Looking back at these migrations, each one was caused by the same failure mode: 
 
 JSON didn't provide atomicity. MongoDB didn't provide durability guarantees I thought it had. Redis didn't provide the persistence I needed for a primary store. PostgreSQL provided everything, but not the embedded deployment model I later needed for more speed.
 
-The lesson isn't "learn all databases before you start." That's not how learning works. The lesson is: **know what properties your system requires, then verify your database provides them**. Atomicity, durability, consistency, isolation — these aren't abstract CS concepts, they're the specific things that break in production.
+The lesson isn't "learn all databases before you start." That's not how learning works. The lesson is: **know what properties your system requires, then verify your database provides them**. Atomicity, durability, consistency, isolation - these aren't abstract CS concepts, they're the specific things that break in production.
 
 I now ask these questions before choosing any data store:
 

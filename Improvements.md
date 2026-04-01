@@ -1,11 +1,11 @@
-# Instructions.md — drlove.dev
+# Instructions.md - drlove.dev
 
 > **Format version:** 2.0
 > **Last evolved:** 2026-03-14
 > **Sessions run:** 1
 > **Schema changes:** 0
 
-This file is the execution entrypoint for Claude Code sessions on the drlove.dev portfolio project. It is designed to be self-improving — read the [Self-Improvement Protocol](#self-improvement-protocol) before your first clean-up.
+This file is the execution entrypoint for Claude Code sessions on the drlove.dev portfolio project. It is designed to be self-improving - read the [Self-Improvement Protocol](#self-improvement-protocol) before your first clean-up.
 
 ---
 
@@ -20,7 +20,7 @@ This file is the execution entrypoint for Claude Code sessions on the drlove.dev
 6. On clean-up, run the Self-Improvement Protocol.
 ```
 
-**Rule:** Never skip steps 1–3. Context-loading is not optional — it prevents redundant work and repeated mistakes.
+**Rule:** Never skip steps 1–3. Context-loading is not optional - it prevents redundant work and repeated mistakes.
 
 ---
 
@@ -78,7 +78,7 @@ Each task below follows this structure:
 - **Acceptance criteria:**
   - Home page contains: hero/intro, background summary, skills overview, featured projects, and a call-to-action (contact or explore writing).
   - About page route is removed or redirects to home.
-  - Navigation updated — no dead links.
+  - Navigation updated - no dead links.
   - Content flows naturally as a single narrative, not a mechanical concatenation.
   - Mobile layout is coherent (test at 375px, 768px, 1024px widths).
 - **Context:** Goal is a streamlined single-entry-point experience. Visitors (professors, recruiters, DAAD reviewers) should understand who the owner is and what he builds within 10 seconds of landing.
@@ -95,7 +95,7 @@ Each task below follows this structure:
   - Interactions: Framer Motion animations are purposeful (guide attention, not distract).
   - Accessibility: Contrast ratios pass WCAG AA. Focus states exist. Alt text on images.
   - Performance: No layout shift. Images optimized. No blocking resources above the fold.
-- **Context:** This is the portfolio's first impression surface. Apply the project's design system from MEMORY.md. The aesthetic is dark, editorial, and precise — not playful or generic.
+- **Context:** This is the portfolio's first impression surface. Apply the project's design system from MEMORY.md. The aesthetic is dark, editorial, and precise - not playful or generic.
 
 ### T-04: Research and add relevant skills to project presentations
 
@@ -107,7 +107,7 @@ Each task below follows this structure:
   - Skills reflect current industry demand (check against real job postings or industry reports).
   - Skills are categorized (e.g., infrastructure, language, tooling, methodology).
   - Sources for skill relevance are documented in the session log.
-- **Context:** Skills listed on projects serve double duty — they're keywords for recruiters AND credibility signals for academic reviewers. Prioritize skills that differentiate (e.g., "libSQL embedded via Axum/gRPC" over generic "SQL").
+- **Context:** Skills listed on projects serve double duty - they're keywords for recruiters AND credibility signals for academic reviewers. Prioritize skills that differentiate (e.g., "libSQL embedded via Axum/gRPC" over generic "SQL").
 
 ---
 
@@ -134,7 +134,7 @@ This file evolves. After every session, perform these steps **in order:**
 Append to the [Session Log](#session-log) using this template:
 
 ```markdown
-### Session {n} — {YYYY-MM-DD}
+### Session {n} - {YYYY-MM-DD}
 - **Tasks attempted:** T-xx, T-yy
 - **Completed:** T-xx
 - **Failed/Blocked:** T-yy (reason: ...)
@@ -160,7 +160,7 @@ For any task that failed or needed rework:
 
 Review the session log. If you notice a reusable insight, add it to the [Patterns Library](#patterns-library). A pattern should be:
 
-- **Actionable** (not just an observation — include the "do this" part).
+- **Actionable** (not just an observation - include the "do this" part).
 - **Scoped** (say when it applies and when it doesn't).
 - **Proven** (emerged from at least one real session, not hypothetical).
 
@@ -179,18 +179,18 @@ If you make a structural change, increment `Schema changes` in the header and no
 
 ## Patterns Library
 
-> Patterns accumulate here over sessions. Start empty — earn each entry.
+> Patterns accumulate here over sessions. Start empty - earn each entry.
 
 ### P-01: Page Merge Pattern
 - **When to apply:** Removing a route by merging its content into another page.
 - **Do this:** Create separate components for each section, give them `id` anchors, update all internal links to `/#anchor`, delete the old route directory, update Nav last.
-- **Don't do this:** Inline all markup directly into page.tsx — keep sections as components for maintainability.
+- **Don't do this:** Inline all markup directly into page.tsx - keep sections as components for maintainability.
 - **Learned from:** Session 1 (about → home merge)
 
 ### P-02: Unified Plugin TypeScript
 - **When to apply:** Adding rehype/remark plugins with options to next-mdx-remote/rsc.
-- **Do this:** Cast the entire rehypePlugins array as `any` — `rehypePlugins: [...] as any`
-- **Don't do this:** Use the `[plugin, options]` tuple form without a cast — TypeScript rejects it with a complex union error.
+- **Do this:** Cast the entire rehypePlugins array as `any` - `rehypePlugins: [...] as any`
+- **Don't do this:** Use the `[plugin, options]` tuple form without a cast - TypeScript rejects it with a complex union error.
 - **Learned from:** Session 1 (rehype-pretty-code integration)
 
 <!-- Pattern template:
@@ -205,20 +205,20 @@ If you make a structural change, increment `Schema changes` in the header and no
 
 ## Session Log
 
-> Append-only. Never edit past entries — they're historical data.
+> Append-only. Never edit past entries - they're historical data.
 
-### Session 1 — 2026-03-14
+### Session 1 - 2026-03-14
 - **Tasks attempted:** T-02, T-01, T-03, T-04
 - **Completed:** T-02, T-01, T-03, T-04 (all tasks)
 - **Failed/Blocked:** none
-- **Time sinks:** rehype-pretty-code TypeScript type error required `as any` cast — next-mdx-remote's plugin type is strict about tuple format.
+- **Time sinks:** rehype-pretty-code TypeScript type error required `as any` cast - next-mdx-remote's plugin type is strict about tuple format.
 - **Discoveries:**
   - `/about` route deleted; content merged into home page at `#journey` / `#contact` anchors.
-  - `--muted` in globals.css is `#888888`, not `#666` as CLAUDE.md states — both have sufficient contrast.
+  - `--muted` in globals.css is `#888888`, not `#666` as CLAUDE.md states - both have sufficient contrast.
   - rehype-pretty-code and rehype-slug were installed but not wired into the article page MDX pipeline.
   - `prefers-reduced-motion` was not handled anywhere in the codebase.
 - **What worked:** Parallel file creation for new components (JourneySection, ContactSection, chip rows). All builds passed first try except the rehype-pretty-code TypeScript issue.
-- **What didn't:** Strict TS types for unified plugin tuples — can't use `[plugin, options]` tuple form without a cast.
+- **What didn't:** Strict TS types for unified plugin tuples - can't use `[plugin, options]` tuple form without a cast.
 
 ---
 
@@ -226,13 +226,13 @@ If you make a structural change, increment `Schema changes` in the header and no
 
 | Version | Date | Change | Reason |
 |---------|------|--------|--------|
-| 2.0 | — | Initial structured format with self-improvement protocol | Replace freeform task list with schema-driven, evolvable system |
+| 2.0 | - | Initial structured format with self-improvement protocol | Replace freeform task list with schema-driven, evolvable system |
 
 ---
 
 ## Cross-File Contract
 
-This project uses three knowledge files. They have distinct roles — don't blur them:
+This project uses three knowledge files. They have distinct roles - don't blur them:
 
 | File | Purpose | Mutated by |
 |------|---------|------------|

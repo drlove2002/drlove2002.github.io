@@ -10,7 +10,7 @@ const stack = [
   { label: 'PostgreSQL',  variant: 'db',     tooltip: 'Used for: Primary relational database' },
   { label: 'Redis',       variant: 'db',     tooltip: 'Used for: Caching hot economy state' },
   { label: 'MongoDB',     variant: 'db',     tooltip: 'Used for: Earlier document store (migrated away)' },
-  { label: 'libSQL',      variant: 'db',     tooltip: 'Used for: Embedded DB inside Rust — zero network latency' },
+  { label: 'libSQL',      variant: 'db',     tooltip: 'Used for: Embedded DB inside Rust - zero network latency' },
   { label: 'AWS',         variant: 'next',   tooltip: 'Used for: Cloud hosting & infra' },
   { label: 'Cloudflare',  variant: 'next',   tooltip: 'Used for: Edge deployment & CDN' },
 ] as const

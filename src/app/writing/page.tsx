@@ -7,7 +7,7 @@ import styles from './writing.module.css'
 export const metadata: Metadata = {
   title: 'Writing',
   description:
-    'Technical writing by Sudip Roy — systems engineering, virtual economy design, database evolution, and community lessons.',
+    'Technical writing by Sudip Roy - systems engineering, virtual economy design, database evolution, and community lessons.',
 }
 
 export default async function WritingPage() {

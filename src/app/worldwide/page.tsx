@@ -11,8 +11,8 @@ import styles from './worldwide.module.css'
 export async function generateMetadata(): Promise<Metadata> {
   const stats = await getServerStats()
   return {
-    title: 'Worldwide — Case Study',
-    description: `Full case study: 3-language architecture, 6-database evolution, real-money economy design, and production failures. Five years of building Worldwide Discord — ${stats.memberCountFormatted} members.`,
+    title: 'Worldwide - Case Study',
+    description: `Full case study: 3-language architecture, 6-database evolution, real-money economy design, and production failures. Five years of building Worldwide Discord - ${stats.memberCountFormatted} members.`,
   }
 }
 
@@ -33,7 +33,7 @@ const dbTimeline = [
     trigger: '🔴 Problem: Relational Data Needs',
     type: 'problem' as const,
     tech: 'MongoDB → PostgreSQL as Primary',
-    why: "The economy system developed complex relational requirements — transactions, balances, event histories — that document stores aren't built for. Migrated to PostgreSQL while keeping Redis as the caching layer.",
+    why: "The economy system developed complex relational requirements - transactions, balances, event histories - that document stores aren't built for. Migrated to PostgreSQL while keeping Redis as the caching layer.",
   },
   {
     trigger: '🟢 Optimization: Network Overhead',
@@ -54,10 +54,10 @@ export default async function WorldwidePage() {
 
   return (
     <article className="section">
-      <SectionLabel>Case Study · 2019 — Present</SectionLabel>
+      <SectionLabel>Case Study · 2019 - Present</SectionLabel>
       <h1 className={styles.heading}>Worldwide Discord Platform</h1>
       <p className={styles.lead}>
-        A real-time community platform with an economy system, games, and events — serving{' '}
+        A real-time community platform with an economy system, games, and events - serving{' '}
         {stats.memberCountFormatted} members with {stats.onlineCountFormatted}+ daily active users.
         Built from scratch. No playbook.
       </p>
@@ -82,11 +82,11 @@ export default async function WorldwidePage() {
       <section className={styles.block}>
         <div className={styles.numberedHeader}>
           <span className={styles.sectionNum}>01</span>
-          <SectionLabel>System Architecture — Why Three Languages</SectionLabel>
+          <SectionLabel>System Architecture - Why Three Languages</SectionLabel>
         </div>
         <h2 className={styles.subheading}>Three languages, one system</h2>
         <p className={styles.body}>
-          The system has three layers. Each was built in a different language — not to show off, but
+          The system has three layers. Each was built in a different language - not to show off, but
           because each layer has fundamentally different requirements that made different tools correct.
         </p>
 
@@ -97,7 +97,7 @@ export default async function WorldwidePage() {
       <section className={styles.block}>
         <div className={styles.numberedHeader}>
           <span className={styles.sectionNum}>02</span>
-          <SectionLabel>The Database Evolution — Driven by Real Failures</SectionLabel>
+          <SectionLabel>The Database Evolution - Driven by Real Failures</SectionLabel>
         </div>
         <h2 className={styles.subheading}>Six databases. Real reasons.</h2>
         <p className={styles.body}>
@@ -116,13 +116,13 @@ export default async function WorldwidePage() {
       <section className={styles.block}>
         <div className={styles.numberedHeader}>
           <span className={styles.sectionNum}>03</span>
-          <SectionLabel>Economy Design — Engineering Meets Behavioral Psychology</SectionLabel>
+          <SectionLabel>Economy Design - Engineering Meets Behavioral Psychology</SectionLabel>
         </div>
         <h2 className={styles.subheading}>Designing for real stakes</h2>
 
         <blockquote className={styles.pullQuote}>
           &ldquo;A virtual economy with {stats.memberCountFormatted} participants behaves like a real economy. Inflation,
-          exploitation, reward psychology, and trust — all of it applies.&rdquo;
+          exploitation, reward psychology, and trust - all of it applies.&rdquo;
         </blockquote>
 
         <EconSection />
@@ -132,7 +132,7 @@ export default async function WorldwidePage() {
       <section className={styles.block}>
         <div className={styles.numberedHeader}>
           <span className={styles.sectionNum}>04</span>
-          <SectionLabel>What Went Wrong — The Honest Section</SectionLabel>
+          <SectionLabel>What Went Wrong - The Honest Section</SectionLabel>
         </div>
         <h2 className={styles.subheading}>What actually went wrong</h2>
         <p className={styles.body}>
@@ -144,7 +144,7 @@ export default async function WorldwidePage() {
           <p>
             <strong style={{ color: 'var(--accent2)' }}>The JSON File Crash.</strong>{' '}
             In the early days, user data lived in a raw JSON file. The bot asynchronously read and
-            wrote virtual currency balances — concurrent access crashed it multiple times a day.
+            wrote virtual currency balances - concurrent access crashed it multiple times a day.
             Users would lose currency mid-transaction. This was the forcing function to learn
             databases properly: the fix wasn&apos;t a patch, it was a full migration to
             MongoDB&apos;s sharded cluster, chosen for write throughput. Lesson: storage choices that
@@ -177,7 +177,7 @@ export default async function WorldwidePage() {
           Five years of building Worldwide taught me that the most interesting engineering problems
           live at the intersection of systems design, behavioral economics, and distributed data.
           The next step is taking these skills into teams and environments that operate at real
-          scale — distributed systems, high-reliability infrastructure, companies where architecture
+          scale - distributed systems, high-reliability infrastructure, companies where architecture
           decisions matter. The next platform won&apos;t be a Discord bot. But the same thinking
           will apply.{' '}
           <Link href="/#journey" style={{ color: 'var(--accent)' }}>Read the full story →</Link>

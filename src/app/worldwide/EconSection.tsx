@@ -15,7 +15,7 @@ interface EconItem {
 const economyCards: EconItem[] = [
   {
     title: 'Inflation Prevention',
-    body: 'Controlling money supply through sinks and faucets — events that remove currency must balance events that generate it.',
+    body: 'Controlling money supply through sinks and faucets - events that remove currency must balance events that generate it.',
     details: [
       'Dynamic sink/faucet ratio adjusted weekly based on total circulating supply',
       'Automated inflation alerts when money supply grows >5% per week',
@@ -23,7 +23,7 @@ const economyCards: EconItem[] = [
       'Seasonal events designed with net-negative currency impact',
     ],
     accent: '#e87c3a',
-    // Balance scale — equilibrium of supply and demand
+    // Balance scale - equilibrium of supply and demand
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
@@ -44,7 +44,7 @@ const economyCards: EconItem[] = [
       'Honeypot items and trade routes designed to catch exploit scripts',
     ],
     accent: '#3ae8b4',
-    // Shield — protection and security against exploits
+    // Shield - protection and security against exploits
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -62,7 +62,7 @@ const economyCards: EconItem[] = [
       'Cooldown timers create artificial scarcity and anticipation loops',
     ],
     accent: '#c084fc',
-    // Brain — behavioral psychology and decision-making
+    // Brain - behavioral psychology and decision-making
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.66Z" />
@@ -80,7 +80,7 @@ const economyCards: EconItem[] = [
       'Instant delivery with automatic retry and manual override for edge cases',
     ],
     accent: '#facc15',
-    // Coin with dollar sign — real-money transactions
+    // Coin with dollar sign - real-money transactions
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="9" />

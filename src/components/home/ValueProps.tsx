@@ -30,7 +30,7 @@ const cards: Card[] = [
     icon: FaSyncAlt,
     color: 'var(--accent)',
     title: 'Problem-Driven Builder',
-    body: 'Migrated through six database systems over five years — each migration triggered by a real failure, not a tutorial recommendation.',
+    body: 'Migrated through six database systems over five years - each migration triggered by a real failure, not a tutorial recommendation.',
   },
 ]
 
@@ -46,7 +46,7 @@ export default function ValueProps({ memberCount = '50,000' }: ValuePropsProps) 
     card.title === 'Economy Designer'
       ? {
           ...card,
-          body: `Built and balanced a virtual economy for ${memberCount} people. Inflation prevention, exploit detection, reward psychology — applied, not academic.`,
+          body: `Built and balanced a virtual economy for ${memberCount} people. Inflation prevention, exploit detection, reward psychology - applied, not academic.`,
         }
       : card
   )

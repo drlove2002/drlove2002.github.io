@@ -1,17 +1,17 @@
 ---
 title: "How I Supercharged My gRPC IPC with UNIX Domain Sockets"
-description: "Replacing TCP localhost with UNIX sockets for 60-70% latency reduction — benchmarks, code, and gotchas."
+description: "Replacing TCP localhost with UNIX sockets for 60-70% latency reduction - benchmarks, code, and gotchas."
 tag: "Systems"
 date: "2025-06-27"
 ---
 
 I run three services on a single machine: Python (Discord bot), Rust (database/cache engine), and TypeScript/Node.js (web dashboard). They talk to each other over gRPC. For months, that meant TCP on `localhost:50051`.
 
-Then I discovered UNIX domain sockets — and the performance jump was absurd.
+Then I discovered UNIX domain sockets - and the performance jump was absurd.
 
 ## The Problem with TCP on Localhost
 
-gRPC is awesome — protobufs, auto-generated stubs, cross-language love. But even on `127.0.0.1`, TCP carries unnecessary overhead:
+gRPC is awesome - protobufs, auto-generated stubs, cross-language love. But even on `127.0.0.1`, TCP carries unnecessary overhead:
 
 - IP headers and checksums
 - Congestion control algorithms
@@ -21,7 +21,7 @@ For frequent RPC calls between co-located services, this overhead adds up. Every
 
 ## The Fix: UNIX Domain Sockets
 
-UNIX domain sockets bypass the IP/TCP networking stack entirely. They use in-kernel buffers with potential zero-copy operations, reducing syscalls and context switches. The data never touches the network layer — it stays in kernel memory.
+UNIX domain sockets bypass the IP/TCP networking stack entirely. They use in-kernel buffers with potential zero-copy operations, reducing syscalls and context switches. The data never touches the network layer - it stays in kernel memory.
 
 The code change is trivial. Replace your TCP address with a socket path:
 
@@ -66,7 +66,7 @@ if os.path.exists(sock_path):
     os.unlink(sock_path)
 ```
 
-- **Path length limit.** UNIX socket paths are limited to ~108 characters. Keep your paths short — `/tmp/my_grpc.sock`, not `/var/run/my-very-long-application-name/grpc-communication.sock`.
+- **Path length limit.** UNIX socket paths are limited to ~108 characters. Keep your paths short - `/tmp/my_grpc.sock`, not `/var/run/my-very-long-application-name/grpc-communication.sock`.
 
 ## When to Use This
 

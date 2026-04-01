@@ -13,7 +13,7 @@ const milestones = [
   {
     year: '2018',
     title: 'Game Engines',
-    desc: 'Unity, Unreal Engine — realized backend was more interesting than rendering.',
+    desc: 'Unity, Unreal Engine - realized backend was more interesting than rendering.',
   },
   {
     year: '2019',
@@ -23,7 +23,7 @@ const milestones = [
   {
     year: '2020',
     title: 'B.Sc. CS Begins',
-    desc: 'University of Calcutta. Theory met practice — the bot was already handling thousands.',
+    desc: 'University of Calcutta. Theory met practice - the bot was already handling thousands.',
   },
   {
     year: '2022',

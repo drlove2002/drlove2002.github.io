@@ -8,7 +8,7 @@ interface StatCounterProps {
   suffix?: string
   label: string
   duration?: number // ms
-  delay?: number    // ms — stagger offset
+  delay?: number    // ms - stagger offset
 }
 
 function easeOut(t: number): number {

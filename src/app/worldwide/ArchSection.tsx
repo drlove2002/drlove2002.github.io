@@ -26,11 +26,11 @@ const archLayers: ArchLayer[] = [
     role: 'Discord Gateway',
     langColor: '#5b9bd5',
     glowColor: 'rgba(91, 155, 213, 0.3)',
-    desc: "Handles the Discord event stream. asyncio fits naturally with Discord's WebSocket gateway — thousands of concurrent events, all I/O bound.",
+    desc: "Handles the Discord event stream. asyncio fits naturally with Discord's WebSocket gateway - thousands of concurrent events, all I/O bound.",
     details: [
       'Handles all Discord events via the WebSocket gateway using asyncio',
-      "Best library ecosystem for Discord's API — discord.py handles rate limiting, sharding, and caching",
-      'gRPC client sends all DB operations to the Rust layer — zero direct database access',
+      "Best library ecosystem for Discord's API - discord.py handles rate limiting, sharding, and caching",
+      'gRPC client sends all DB operations to the Rust layer - zero direct database access',
       'gRPC server exposes endpoints for the dashboard to trigger bot actions',
       'Event-driven architecture: commands, economy transactions, game logic all flow through a central dispatcher',
     ],
@@ -50,9 +50,9 @@ const archLayers: ArchLayer[] = [
     glowColor: 'rgba(224, 92, 32, 0.3)',
     desc: "Handles all database operations and real-money transactions via Axum. GC pauses are unacceptable in a payment path.",
     details: [
-      "Rust's ownership model guarantees memory safety without a runtime — zero GC pauses on the financial path",
+      "Rust's ownership model guarantees memory safety without a runtime - zero GC pauses on the financial path",
       'libSQL embedded in-process eliminates network latency for the most critical operations',
-      'Axum HTTP server for real-money purchase flow — handles PayPal webhooks, receipt validation',
+      'Axum HTTP server for real-money purchase flow - handles PayPal webhooks, receipt validation',
       'gRPC server for Python: all economy mutations (balance changes, trades, rewards) go through here',
       'gRPC client calls back to Python for bot-level actions (sending DMs, updating roles)',
     ],
@@ -75,7 +75,7 @@ const archLayers: ArchLayer[] = [
       'Real-time economy monitoring: balance distributions, inflation metrics, transaction volumes',
       'User management: search, ban, adjust balances, view transaction history',
       'Event management: create, schedule, and monitor community events',
-      'Communicates exclusively with the Rust layer via gRPC — never touches the bot directly',
+      'Communicates exclusively with the Rust layer via gRPC - never touches the bot directly',
       'Deployed with Cloudflare for SSL and CDN',
     ],
     tags: [
@@ -167,7 +167,7 @@ function Modal({ layer, onClose }: { layer: ArchLayer; onClose: () => void }) {
 function NodeGraph() {
   /*
    * Layout:  Python(left) ← Rust(center) → Next.js(right)
-   * viewBox 600×120 — nodes at y=60, labels at y=96
+   * viewBox 600×120 - nodes at y=60, labels at y=96
    * Flow: Rust (server) sends to both clients via gRPC
    */
   const py  = { x: 100, y: 55 }
@@ -222,7 +222,7 @@ function NodeGraph() {
           letterSpacing="0.12em">gRPC</text>
 
         {/* ── Animated particles (server → clients) ────────────────── */}
-        {/* Rust → Python  (3 staggered, orange — server sends to gateway) */}
+        {/* Rust → Python  (3 staggered, orange - server sends to gateway) */}
         {[0, 0.7, 1.4].map((delay, i) => (
           <circle key={`rp${i}`} r={4 - i * 0.5} fill="#e05c20" filter="url(#particleGlow)">
             <animateMotion dur="2s" repeatCount="indefinite" begin={`${delay}s`}
@@ -231,7 +231,7 @@ function NodeGraph() {
               repeatCount="indefinite" begin={`${delay}s`} />
           </circle>
         ))}
-        {/* Rust → Next.js  (3 staggered — server sends to dashboard) */}
+        {/* Rust → Next.js  (3 staggered - server sends to dashboard) */}
         {[0, 0.8, 1.5].map((delay, i) => (
           <circle key={`rn${i}`} r={4 - i * 0.5} fill="#e05c20" filter="url(#particleGlow)">
             <animateMotion dur="2s" repeatCount="indefinite" begin={`${delay}s`}

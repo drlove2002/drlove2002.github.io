@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio Blueprint — Sudip Roy (drlove)</title>
+<title>Portfolio Blueprint - Sudip Roy (drlove)</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -749,7 +749,7 @@
 
 <!-- ==================== PAGE 1: HOME ==================== -->
 <div class="page-break">
-  <span class="page-break-label">Page 1 — Home</span>
+  <span class="page-break-label">Page 1 - Home</span>
   <span class="page-break-url">drlove.dev/</span>
 </div>
 
@@ -789,7 +789,7 @@
   </div>
 
   <div class="design-note">
-    <strong>🎨 Design Intent — Hero Section</strong>
+    <strong>🎨 Design Intent - Hero Section</strong>
     Dark background with a very subtle warm radial glow top-right. Numbers animate up with a counter effect on page load. The "line2" in muted gray creates visual contrast without needing color. Stats appear with a staggered fade-in (150ms delay each). This above-the-fold makes an instant claim: this person has done something real at scale.
   </div>
 </section>
@@ -825,18 +825,18 @@
     <div class="card">
       <div class="card-icon">📈</div>
       <h3>Economy Designer</h3>
-      <p style="font-size: 0.9rem;">Built and balanced a virtual economy for 50,000 people. Inflation prevention, exploit detection, reward psychology — applied, not academic.</p>
+      <p style="font-size: 0.9rem;">Built and balanced a virtual economy for 50,000 people. Inflation prevention, exploit detection, reward psychology - applied, not academic.</p>
     </div>
     <div class="card">
       <div class="card-icon">🔄</div>
       <h3>Problem-Driven Builder</h3>
-      <p style="font-size: 0.9rem;">Migrated through six database systems over five years — each migration triggered by a real failure, not a tutorial recommendation.</p>
+      <p style="font-size: 0.9rem;">Migrated through six database systems over five years - each migration triggered by a real failure, not a tutorial recommendation.</p>
     </div>
   </div>
 
   <div class="design-note">
-    <strong>🎨 Design Intent — Value Props</strong>
-    Three cards in a borderless grid separated only by 1px lines (the gap + border trick). No icons box — just the emoji + tight text. Each card tells a story in 2 sentences max. Hover lifts background slightly. This section answers: "why is this person interesting?" in 10 seconds of reading.
+    <strong>🎨 Design Intent - Value Props</strong>
+    Three cards in a borderless grid separated only by 1px lines (the gap + border trick). No icons box - just the emoji + tight text. Each card tells a story in 2 sentences max. Hover lifts background slightly. This section answers: "why is this person interesting?" in 10 seconds of reading.
   </div>
 </section>
 
@@ -844,14 +844,14 @@
 
 <!-- ==================== PAGE 2: WORLDWIDE PROJECT ==================== -->
 <div class="page-break">
-  <span class="page-break-label">Page 2 — Worldwide Project</span>
+  <span class="page-break-label">Page 2 - Worldwide Project</span>
   <span class="page-break-url">drlove.dev/worldwide</span>
 </div>
 
 <section class="section">
-  <div class="section-label">Case Study · 2019 — Present</div>
+  <div class="section-label">Case Study · 2019 - Present</div>
   <h2>Worldwide Discord Platform</h2>
-  <p style="max-width: 600px;">A real-time community platform with an economy system, games, and events — serving 50,000 members with 2,000+ daily active users. Built from scratch. No playbook.</p>
+  <p style="max-width: 600px;">A real-time community platform with an economy system, games, and events - serving 50,000 members with 2,000+ daily active users. Built from scratch. No playbook.</p>
 
   <div class="stack-row">
     <span class="chip python">Python · Gateway</span>
@@ -872,15 +872,15 @@
   <!-- SECTION 1: Architecture -->
   <div class="numbered-header" style="margin-top: 3rem;">
     <span class="section-num">01</span>
-    <h3>System Architecture — Why Three Languages</h3>
+    <h3>System Architecture - Why Three Languages</h3>
   </div>
 
-  <p style="max-width: 650px;">The system has three layers. Each was built in a different language — not to show off, but because each layer has fundamentally different requirements that made different tools correct.</p>
+  <p style="max-width: 650px;">The system has three layers. Each was built in a different language - not to show off, but because each layer has fundamentally different requirements that made different tools correct.</p>
 
   <div class="arch-layers">
     <div class="arch-layer" style="background: rgba(53,114,165,0.05);">
       <div class="arch-lang" style="color: #5b9bd5;">Python<br><span style="color: var(--muted); font-weight: 300;">Discord Gateway</span></div>
-      <div class="arch-desc">Handles the Discord event stream. asyncio fits naturally with Discord's WebSocket gateway — thousands of concurrent events, all I/O bound. Best library ecosystem for Discord's API lives in Python.</div>
+      <div class="arch-desc">Handles the Discord event stream. asyncio fits naturally with Discord's WebSocket gateway - thousands of concurrent events, all I/O bound. Best library ecosystem for Discord's API lives in Python.</div>
       <div class="arch-why">Async I/O<br>Event-driven<br>Best Discord libs</div>
     </div>
     <div class="arch-layer" style="background: rgba(183,65,14,0.05);">
@@ -896,14 +896,14 @@
   </div>
 
   <div class="design-note">
-    <strong>🎨 Design Intent — Architecture Section</strong>
+    <strong>🎨 Design Intent - Architecture Section</strong>
     The three-layer table is the most important visual on this page. Color-coded by language (subtle background tint). Three columns: language/role, why it was chosen, key properties. No code shown. A senior engineer reading this immediately understands you made informed decisions, not random ones. Add a simple SVG diagram above this showing the three boxes connected by arrows: Discord ↔ Python ↔ [gRPC] ↔ Rust ↔ Databases. That diagram takes 30 minutes to make and dramatically improves comprehension.
   </div>
 
   <!-- SECTION 2: Database Evolution -->
   <div class="numbered-header" style="margin-top: 3rem;">
     <span class="section-num">02</span>
-    <h3>The Database Evolution — Driven by Real Failures</h3>
+    <h3>The Database Evolution - Driven by Real Failures</h3>
   </div>
 
   <p style="max-width: 650px;">This is the most honest part of the case study. Every database migration happened because something broke, something scaled poorly, or something cost too much latency. Here's the progression.</p>
@@ -922,7 +922,7 @@
     <div class="timeline-item problem">
       <div class="timeline-trigger">🔴 Problem: Relational Data Needs</div>
       <div class="timeline-tech">MongoDB → PostgreSQL as Primary</div>
-      <div class="timeline-why">The economy system developed complex relational requirements — transactions, balances, event histories — that document stores aren't built for. Migrated to PostgreSQL while keeping Redis as the caching layer.</div>
+      <div class="timeline-why">The economy system developed complex relational requirements - transactions, balances, event histories - that document stores aren't built for. Migrated to PostgreSQL while keeping Redis as the caching layer.</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-trigger">🟢 Optimization: Network Overhead</div>
@@ -937,24 +937,24 @@
   </div>
 
   <div class="design-note">
-    <strong>🎨 Design Intent — Database Timeline</strong>
-    This is the single most impressive section in your entire portfolio for technical readers. The timeline format works because it shows *causality* — each step was forced by a real problem. Color code the trigger labels: red for problems that forced change, green for proactive optimizations, orange for curiosity-driven improvements. This visual alone tells a 5-year engineering story in 2 minutes of reading. The custom Redis detail should be visually distinct — maybe a slightly different card style — because it's the most exceptional data point.
+    <strong>🎨 Design Intent - Database Timeline</strong>
+    This is the single most impressive section in your entire portfolio for technical readers. The timeline format works because it shows *causality* - each step was forced by a real problem. Color code the trigger labels: red for problems that forced change, green for proactive optimizations, orange for curiosity-driven improvements. This visual alone tells a 5-year engineering story in 2 minutes of reading. The custom Redis detail should be visually distinct - maybe a slightly different card style - because it's the most exceptional data point.
   </div>
 
   <!-- SECTION 3: Economy Design -->
   <div class="numbered-header" style="margin-top: 3rem;">
     <span class="section-num">03</span>
-    <h3>Economy Design — Where Engineering Meets Behavioral Psychology</h3>
+    <h3>Economy Design - Where Engineering Meets Behavioral Psychology</h3>
   </div>
 
   <div class="pull-quote">
-    "A virtual economy with 50,000 participants behaves like a real economy. Inflation, exploitation, reward psychology, and trust — all of it applies."
+    "A virtual economy with 50,000 participants behaves like a real economy. Inflation, exploitation, reward psychology, and trust - all of it applies."
   </div>
 
   <div class="card-grid" style="margin: 1rem 0;">
     <div class="card">
       <h3 style="font-size: 0.9rem;">Inflation Prevention</h3>
-      <p style="font-size: 0.8rem;">Controlling money supply through sinks and faucets — events that remove currency must balance events that generate it.</p>
+      <p style="font-size: 0.8rem;">Controlling money supply through sinks and faucets - events that remove currency must balance events that generate it.</p>
     </div>
     <div class="card">
       <h3 style="font-size: 0.9rem;">Exploit Detection</h3>
@@ -971,14 +971,14 @@
   </div>
 
   <div class="design-note">
-    <strong>🎨 Design Intent — Economy Section</strong>
-    This section differentiates you from every other CS applicant. Lead with the pull quote — it frames the section philosophically before going technical. The four cards show you thought about this multidimensionally. Note: don't reveal specific exploit mechanics or pricing — just the categories of thinking. This section should reference your interest in economics and game theory naturally: "My interest in behavioral economics and games like Factorio directly informed these design decisions." One sentence. No lecture needed.
+    <strong>🎨 Design Intent - Economy Section</strong>
+    This section differentiates you from every other CS applicant. Lead with the pull quote - it frames the section philosophically before going technical. The four cards show you thought about this multidimensionally. Note: don't reveal specific exploit mechanics or pricing - just the categories of thinking. This section should reference your interest in economics and game theory naturally: "My interest in behavioral economics and games like Factorio directly informed these design decisions." One sentence. No lecture needed.
   </div>
 
   <!-- SECTION 4: What Went Wrong -->
   <div class="numbered-header" style="margin-top: 3rem;">
     <span class="section-num">04</span>
-    <h3>What Went Wrong — The Honest Section</h3>
+    <h3>What Went Wrong - The Honest Section</h3>
   </div>
 
   <p style="max-width: 650px;">Every senior engineer reading a portfolio looks for this. Anyone can list achievements. Only someone who actually built something can describe what they got wrong.</p>
@@ -988,20 +988,20 @@
   </div>
 
   <div class="design-note">
-    <strong>🎨 Design Intent — What Went Wrong</strong>
-    The cache bug story is perfect for this section because it shows three things at once: technical failure (the bug), human judgment (how you handled the community), and engineering response (the systematic fix). DAAD evaluators specifically value self-awareness. This section should also include 1-2 architectural decisions you'd reverse — for example, "I'd start with PostgreSQL from day one instead of migrating to it" or "I'd design the gRPC interface differently." Those show current technical maturity, not just past mistakes. The highlight box treatment makes this feel like a retrospective memo, not a confession.
+    <strong>🎨 Design Intent - What Went Wrong</strong>
+    The cache bug story is perfect for this section because it shows three things at once: technical failure (the bug), human judgment (how you handled the community), and engineering response (the systematic fix). DAAD evaluators specifically value self-awareness. This section should also include 1-2 architectural decisions you'd reverse - for example, "I'd start with PostgreSQL from day one instead of migrating to it" or "I'd design the gRPC interface differently." Those show current technical maturity, not just past mistakes. The highlight box treatment makes this feel like a retrospective memo, not a confession.
   </div>
 
   <!-- SECTION 5: What's Next -->
   <div class="numbered-header" style="margin-top: 3rem;">
     <span class="section-num">05</span>
-    <h3>What's Next — The Bridge to Germany</h3>
+    <h3>What's Next - The Bridge to Germany</h3>
   </div>
 
   <p style="max-width: 650px;">One focused paragraph that connects your 5-year project to why you want a CS master's in Germany. Mention TU Berlin specifically. Mention the companies you want to work at during your Werkstudent. Make it concrete, not generic. This is the paragraph DAAD reads before deciding.</p>
 
   <div class="design-note">
-    <strong>🎨 Design Intent — What's Next</strong>
+    <strong>🎨 Design Intent - What's Next</strong>
     Keep this short. One paragraph. No bullet points. The preceding four sections did all the heavy lifting. This section just closes the loop: "here's where I've been, here's why that naturally leads to this specific place, here's what I'll do when I get there." End with a link to your About page for the full personal story.
   </div>
 </section>
@@ -1010,7 +1010,7 @@
 
 <!-- ==================== PAGE 3: WRITING ==================== -->
 <div class="page-break">
-  <span class="page-break-label">Page 3 — Writing</span>
+  <span class="page-break-label">Page 3 - Writing</span>
   <span class="page-break-url">drlove.dev/writing</span>
 </div>
 
@@ -1030,13 +1030,13 @@
     <div class="post-item">
       <div>
         <div class="post-title">Designing a Virtual Economy for 50,000 People</div>
-        <div class="post-desc">Inflation, exploit prevention, reward psychology — applied behavioral economics · 12 min read</div>
+        <div class="post-desc">Inflation, exploit prevention, reward psychology - applied behavioral economics · 12 min read</div>
       </div>
       <span class="post-tag">Economy Design</span>
     </div>
     <div class="post-item">
       <div>
-        <div class="post-title">Six Databases in Five Years — A Story of Real Failures</div>
+        <div class="post-title">Six Databases in Five Years - A Story of Real Failures</div>
         <div class="post-desc">JSON → MongoDB → Redis → PostgreSQL → libSQL → custom cache. Each migration had a reason · 10 min read</div>
       </div>
       <span class="post-tag">Databases</span>
@@ -1051,8 +1051,8 @@
   </div>
 
   <div class="design-note">
-    <strong>🎨 Design Intent — Writing Page</strong>
-    Simple, editorial list layout. No thumbnails, no tag clouds, no distractions. Each post has title, one-line description with reading time, and a single category tag. The category tags use the same accent color system as the rest of the site. The post titles should do all the work — they should be specific and intriguing, not generic. Notice the third post title "Six Databases in Five Years — A Story of Real Failures" — that framing is more compelling than "My Database Migration Journey." The dash construction works well for technical titles. These four posts are your minimum viable writing presence.
+    <strong>🎨 Design Intent - Writing Page</strong>
+    Simple, editorial list layout. No thumbnails, no tag clouds, no distractions. Each post has title, one-line description with reading time, and a single category tag. The category tags use the same accent color system as the rest of the site. The post titles should do all the work - they should be specific and intriguing, not generic. Notice the third post title "Six Databases in Five Years - A Story of Real Failures" - that framing is more compelling than "My Database Migration Journey." The dash construction works well for technical titles. These four posts are your minimum viable writing presence.
   </div>
 </section>
 
@@ -1060,7 +1060,7 @@
 
 <!-- ==================== PAGE 4: ABOUT ==================== -->
 <div class="page-break">
-  <span class="page-break-label">Page 4 — About</span>
+  <span class="page-break-label">Page 4 - About</span>
   <span class="page-break-url">drlove.dev/about</span>
 </div>
 
@@ -1074,9 +1074,9 @@
 
       <p>My path into software was unusual. It started with curiosity about how video games worked, led through learning to hack Wi-Fi to play a game (which taught me more about social engineering than any textbook), through Unity and Unreal Engine, and eventually landed on backend systems and distributed architecture.</p>
 
-      <p>For the last five years I've been co-owning and building Worldwide — a Discord server of 50,000 people with its own economy, games, and culture. That project has been my real education: not in theory, but in what happens when real people interact with systems you build at scale.</p>
+      <p>For the last five years I've been co-owning and building Worldwide - a Discord server of 50,000 people with its own economy, games, and culture. That project has been my real education: not in theory, but in what happens when real people interact with systems you build at scale.</p>
 
-      <p>I'm now completing my M.Sc in Computer Science, having previously cleared the GATE exam. I'm looking to bring the practical depth I've built to a world-class research environment — specifically a master's program in Germany where I can be inside a city with the kind of creative tech companies I want to eventually build for or build myself.</p>
+      <p>I'm now completing my M.Sc in Computer Science, having previously cleared the GATE exam. I'm looking to bring the practical depth I've built to a world-class research environment - specifically a master's program in Germany where I can be inside a city with the kind of creative tech companies I want to eventually build for or build myself.</p>
 
       <p>Long term: CTO. Maybe founder. Definitely someone who builds things that outlast the building of them.</p>
     </div>
@@ -1095,8 +1095,8 @@
       </div>
 
       <div class="design-note" style="margin-top: 1.5rem;">
-        <strong>🎨 Design Intent — Interests Grid</strong>
-        Add a single sentence after the grid that connects these to your work: "Factorio taught me more about logistics optimization and resource flow than any textbook. Economics and psychology informed every economy design decision in Worldwide. Chess sharpens how I think about long-term architectural tradeoffs." This one paragraph transforms a list of hobbies into evidence of a multidisciplinary systems thinker — which is exactly what DAAD scholarship committees value.
+        <strong>🎨 Design Intent - Interests Grid</strong>
+        Add a single sentence after the grid that connects these to your work: "Factorio taught me more about logistics optimization and resource flow than any textbook. Economics and psychology informed every economy design decision in Worldwide. Chess sharpens how I think about long-term architectural tradeoffs." This one paragraph transforms a list of hobbies into evidence of a multidisciplinary systems thinker - which is exactly what DAAD scholarship committees value.
       </div>
     </div>
   </div>
@@ -1106,14 +1106,14 @@
 
 <!-- ==================== PAGE 5: CONTACT ==================== -->
 <div class="page-break">
-  <span class="page-break-label">Page 5 — Contact</span>
+  <span class="page-break-label">Page 5 - Contact</span>
   <span class="page-break-url">drlove.dev/contact</span>
 </div>
 
 <section class="section">
   <div class="section-label">Get in Touch</div>
   <h2>Contact</h2>
-  <p>Open to conversations about engineering, research, and opportunities in Europe — particularly Germany.</p>
+  <p>Open to conversations about engineering, research, and opportunities in Europe - particularly Germany.</p>
 
   <div class="contact-grid">
     <div class="contact-item">
@@ -1123,7 +1123,7 @@
     <div class="contact-item">
       <div class="contact-type">GitHub</div>
       <div class="contact-value">github.com/drlove2002</div>
-      <div class="contact-note">Personal account. Worldwide org repos are private (IP protection) — architecture documented in the case study.</div>
+      <div class="contact-note">Personal account. Worldwide org repos are private (IP protection) - architecture documented in the case study.</div>
     </div>
     <div class="contact-item">
       <div class="contact-type">LinkedIn</div>
@@ -1137,8 +1137,8 @@
   </div>
 
   <div class="design-note" style="margin-top: 2rem;">
-    <strong>🎨 Design Intent — Contact Page</strong>
-    The private GitHub note is important — put it proactively so nobody wonders why your org is private. It frames the privacy as a professional decision (IP protection) not a red flag. The Discord link with "The thing this portfolio is about" as the note adds personality and closes the loop on the entire site's narrative. Keep this page clean and minimal — it's functional, not a showcase. The four-cell grid is all you need.
+    <strong>🎨 Design Intent - Contact Page</strong>
+    The private GitHub note is important - put it proactively so nobody wonders why your org is private. It frames the privacy as a professional decision (IP protection) not a red flag. The Discord link with "The thing this portfolio is about" as the note adds personality and closes the loop on the entire site's narrative. Keep this page clean and minimal - it's functional, not a showcase. The four-cell grid is all you need.
   </div>
 </section>
 
@@ -1160,19 +1160,19 @@
       <div style="display: grid; gap: 0.5rem;">
         <div style="display: flex; align-items: center; gap: 1rem;">
           <div style="width: 40px; height: 40px; background: #0a0a0a; border: 1px solid #333;"></div>
-          <div><div class="muted">#0a0a0a</div><div style="font-size:0.8rem; color:#888">Background — near black, not pure</div></div>
+          <div><div class="muted">#0a0a0a</div><div style="font-size:0.8rem; color:#888">Background - near black, not pure</div></div>
         </div>
         <div style="display: flex; align-items: center; gap: 1rem;">
           <div style="width: 40px; height: 40px; background: #e87c3a; border: 1px solid #333;"></div>
-          <div><div class="muted">#e87c3a</div><div style="font-size:0.8rem; color:#888">Accent — warm amber, not orange</div></div>
+          <div><div class="muted">#e87c3a</div><div style="font-size:0.8rem; color:#888">Accent - warm amber, not orange</div></div>
         </div>
         <div style="display: flex; align-items: center; gap: 1rem;">
           <div style="width: 40px; height: 40px; background: #3ae8b4; border: 1px solid #333;"></div>
-          <div><div class="muted">#3ae8b4</div><div style="font-size:0.8rem; color:#888">Accent 2 — used sparingly for highlights</div></div>
+          <div><div class="muted">#3ae8b4</div><div style="font-size:0.8rem; color:#888">Accent 2 - used sparingly for highlights</div></div>
         </div>
         <div style="display: flex; align-items: center; gap: 1rem;">
           <div style="width: 40px; height: 40px; background: #e8e4dc; border: 1px solid #333;"></div>
-          <div><div class="muted">#e8e4dc</div><div style="font-size:0.8rem; color:#888">Text — warm white, not pure</div></div>
+          <div><div class="muted">#e8e4dc</div><div style="font-size:0.8rem; color:#888">Text - warm white, not pure</div></div>
         </div>
       </div>
     </div>
@@ -1181,15 +1181,15 @@
       <h3 style="margin-bottom: 1rem;">Typography</h3>
       <div style="display: grid; gap: 1rem;">
         <div>
-          <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; letter-spacing: -0.03em;">Syne — Headlines</div>
+          <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; letter-spacing: -0.03em;">Syne - Headlines</div>
           <div class="muted">Used for all headings, stat numbers, nav logo</div>
         </div>
         <div>
-          <div style="font-family: 'Lora', serif; font-size: 1rem; font-style: italic;">Lora — Body Copy</div>
+          <div style="font-family: 'Lora', serif; font-size: 1rem; font-style: italic;">Lora - Body Copy</div>
           <div class="muted">Serif for warmth and readability in long text</div>
         </div>
         <div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">JetBrains Mono — Labels & Code</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">JetBrains Mono - Labels & Code</div>
           <div class="muted">All metadata, labels, chips, URLs, tech refs</div>
         </div>
       </div>
@@ -1232,12 +1232,12 @@
 
   <div class="design-note" style="margin-top: 2rem;">
     <strong>📐 The One Rule That Governs Everything</strong>
-    Every design decision should serve the narrative: "This person built something real, at scale, with good judgment." When in doubt about whether to add a visual element or section — ask: does this prove that claim, or does it just look nice? If it just looks nice, cut it. The site's restraint is part of the argument.
+    Every design decision should serve the narrative: "This person built something real, at scale, with good judgment." When in doubt about whether to add a visual element or section - ask: does this prove that claim, or does it just look nice? If it just looks nice, cut it. The site's restraint is part of the argument.
   </div>
 </section>
 
 <footer>
-  <p>Blueprint for drlove.dev — Sudip Roy Portfolio</p>
+  <p>Blueprint for drlove.dev - Sudip Roy Portfolio</p>
   <p>Built with Next.js · Deployed on Cloudflare Workers · <span style="color: var(--accent);">Every decision has a reason.</span></p>
 </footer>
 
