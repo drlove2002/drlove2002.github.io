@@ -1,0 +1,125 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,margin=0.55in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{iftex}
+
+\ifPDFTeX
+  \input{glyphtounicode}
+  \pdfgentounicode=1
+\fi
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.12em}
+\pagenumbering{gobble}
+\urlstyle{same}
+
+\definecolor{heading}{HTML}{111111}
+
+\titleformat{\section}{\large\bfseries\color{heading}}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{0.45em}{0.2em}
+
+\setlist[itemize]{leftmargin=1.15em,topsep=0.1em,itemsep=0.1em,parsep=0em,partopsep=0em}
+
+\newcommand{\resumeheader}[1]{\begin{center}#1\end{center}}
+\newcommand{\resumesubheading}[4]{
+  \textbf{#1} \hfill #2 \\
+  #3 \hfill #4
+}
+
+\begin{document}
+
+\resumeheader{
+  {\LARGE \textbf{Sudip Roy}}\\
+  Full-Stack Software Engineer\\
+  West Bengal, India \,|\, \href{mailto:sudiproy20yo@gmail.com}{sudiproy20yo@gmail.com} \,|\, \href{https://drlove.dev}{drlove.dev}\\
+  \href{https://github.com/drlove2002}{github.com/drlove2002} \,|\, \href{https://linkedin.com/in/drlove2002}{linkedin.com/in/drlove2002}
+}
+
+\section*{Summary}
+Full-stack engineer who gets genuinely excited about building things. I built and run a platform for a Discord community that grew to 60{,}000+ members and 4{,}000+ daily users. The stack wanders across Python, Rust, and TypeScript because I kept hitting walls and learning new tools to break through them. I own the whole thing end to end: architecture, databases, deploys, and the 3 AM production debugging sessions.
+
+\section*{Technical Skills}
+\textbf{Languages:} Python, Rust, TypeScript, SQL, JavaScript\\
+\textbf{Frameworks \& Tools:} Next.js, React, Axum, Actix, gRPC, discord.py, Docker, Git, GitHub Actions\\
+\textbf{Databases \& Caching:} PostgreSQL, Redis, MongoDB, SQLite, libSQL\\
+\textbf{Infrastructure:} AWS, Cloudflare, Linux, static site deployment, service-oriented architecture
+
+\section*{Experience}
+\resumesubheading{Software Developer}{2020 -- Present}{Worldwide Discord Platform}{Full Stack / Systems}
+\begin{itemize}
+  \item Built and maintained a production community platform serving 60{,}000+ members and 4{,}000+ daily active users across Python, Rust, and TypeScript services.
+  \item Designed a three-layer architecture: Python handles the Discord gateway, Rust owns the data and financial path, and Next.js powers the dashboard and admin workflows.
+  \item Introduced gRPC between services to separate bot logic from database and transaction logic, which made the codebase way easier to reason about.
+  \item Evolved storage from raw JSON to MongoDB, Redis, PostgreSQL, and embedded libSQL. Each migration was triggered by a real production failure I had to fix.
+  \item Embedded libSQL inside the Rust process to kill network round-trips for latency-sensitive operations, which noticeably improved the transaction path.
+  \item Implemented economy systems, moderation tooling, games, event workflows, and real-money purchases with Axum and PayPal webhooks. Broke things, fixed them, added logging and recovery so they wouldn't break the same way twice.
+\end{itemize}
+
+\section*{Projects}
+\resumesubheading{Pattern Pursuit}{2023}{\href{https://github.com/drlove2002/pattern_pursuit}{github.com/drlove2002/pattern\_pursuit}}{Rust, TypeScript, Redis, Docker, AWS}
+\begin{itemize}
+  \item An interactive prediction game with a Rust/Actix backend, TypeScript frontend, and Redis for real-time game state.
+  \item Uses 5-gram statistical language modeling so players compete against a model that learns from their gameplay.
+  \item Containerized with Docker and deployed on AWS.
+\end{itemize}
+
+\resumesubheading{Sudoku Solver Research}{Active}{\href{https://github.com/drlove2002/sudoku_solver}{github.com/drlove2002/sudoku\_solver}}{Rust, Criterion, Algorithm Research}
+\begin{itemize}
+  \item A modular Sudoku-solving and benchmarking system in Rust for testing swappable solver components against a large real-world dataset.
+  \item Focused on minigrid-based constraint propagation, permutation graph construction, benchmarking, and graph-based visualization rather than a single hardcoded solver path.
+\end{itemize}
+
+\section*{Education}
+\resumesubheading{M.Sc. in Computer Science}{Final Year}{University of Calcutta}{West Bengal, India}
+\vspace{0.15em}
+
+\resumesubheading{B.Sc. in Computer Science}{2020 -- 2023}{University of Calcutta}{West Bengal, India}
+
+\section*{Additional}
+\textbf{Focus Areas:} distributed systems, backend engineering, API design, database architecture, systems reliability, full-stack product development\\
+\textbf{Languages:} Bengali (Native), English (Fluent), Hindi (Intermediate)
+
+\newpage
+\newgeometry{margin=1in}
+\fontsize{11pt}{14pt}\selectfont
+\setlength{\parskip}{0.8em}
+
+\noindent \today
+
+\vspace{1.2em}
+
+\noindent \textbf{Dear Hiring Manager,}
+
+\vspace{0.6em}
+
+I'm gonna be real with you. I don't code for money. I mean yeah, I need food, clothes, a roof. The basics. That's it. Everything else? I just wanna build stuff, break it, fix it, learn something new, and do it all over again the next day. It's not a job for me. It's legit an addiction. A good one, I think.
+
+My journey started like a low level character in an old MMO. I joined this dead Discord server called immunity. No one talked. I thought, what if I build a bot to wake people up? I barely knew Python. But instead of watching tutorials forever, I just... started. That's how I am. I get excited and I can't wait.
+
+First bot was ugly. I added an economy system where people earned virtual coins for each message. It worked kinda. Then concurrent writes crashed it because I used a raw JSON file. Stupid mistake. But I loved every second.
+
+I hopped into databases. MongoDB sharded cluster for fast writes. Then Redis for caching when things got slow. Then PostgreSQL when I needed relations. Each time I learned just enough to make it work, broke something else, then learned more. That cycle is my happy place.
+
+Then I got obsessed with Rust. I built a Data Access Layer with gRPC so my Python bot could talk to Rust fast. Added an Axum API for real money purchases (people actually bought stuff). Then libSQL inside Rust to kill network lag. Every new thing felt like discovering a secret dungeon.
+
+But here's what I'm really excited about lately. AI. I can't stop reading about new AI threads. I'm customizing my own AI agent using Pi mono. Yeah it's still janky but I love it. I'm building workflows that help me code my Discord bot and website faster. Stuff like auto generating boilerplate, summarizing logs, even suggesting refactors. It feels like I have a little wizard helper now.
+
+And I'm also building new games. I can't talk about them yet. Seriously, I promised. But they're gonna be something. The idea is to create a feedback loop with the community. Like, an ultimate community that works buttery smooth. Money flows in booorrrr... well, at least it'll make my co-owner Flame from the Discord community happy XD. That's all I care about. Flame has been there since day one. If I can make him smile, I'm good.
+
+And I'm not gonna lie. I get super excited about everything I build. Like, child level excitement. Dancing in my chair excited. I don't need a big salary. Just enough to survive and keep doing this forever. The rest of my life I wanna spend understanding software, breaking it, rebuilding it, and maybe helping some people along the way.
+
+So yeah. I'm not a perfect developer. I misspell things. Sometimes I forget to commit for days. But I love coding with my whole dumb heart. If your company needs someone who genuinely does this for the love of the game, not for the incentives, I'm your guy.
+
+\vspace{0.8em}
+
+\noindent Sincerely,\\
+Sudip Roy
+
+\end{document}

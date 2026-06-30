@@ -1,0 +1,89 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,margin=0.55in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{iftex}
+
+\ifPDFTeX
+  \input{glyphtounicode}
+  \pdfgentounicode=1
+\fi
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.12em}
+\pagenumbering{gobble}
+\urlstyle{same}
+
+\definecolor{heading}{HTML}{111111}
+
+\titleformat{\section}{\large\bfseries\color{heading}}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{0.45em}{0.2em}
+
+\setlist[itemize]{leftmargin=1.15em,topsep=0.1em,itemsep=0.1em,parsep=0em,partopsep=0em}
+
+\newcommand{\resumeheader}[1]{\begin{center}#1\end{center}}
+\newcommand{\resumesubheading}[4]{
+  \textbf{#1} \hfill #2 \\
+  #3 \hfill #4
+}
+
+\begin{document}
+
+\resumeheader{
+  {\LARGE \textbf{Sudip Roy}}\\
+  Systems Software Engineer\\
+  West Bengal, India \,|\, \href{mailto:sudiproy20yo@gmail.com}{sudiproy20yo@gmail.com} \,|\, \href{https://drlove.dev}{drlove.dev}\\
+  \href{https://github.com/drlove2002}{github.com/drlove2002} \,|\, \href{https://linkedin.com/in/drlove2002}{linkedin.com/in/drlove2002}
+}
+
+\section*{Summary}
+Systems-focused software engineer with hands-on experience building performance-sensitive Rust, Python, and TypeScript systems. Built and operated a multi-service platform used by a 50{,}000+ member community, with production work spanning low-latency IPC, storage engine tradeoffs, graph-based algorithm research, and performance-driven backend design. Interested in compiler-adjacent, infrastructure, and runtime-heavy engineering problems.
+
+\section*{Technical Skills}
+\textbf{Languages:} Rust, Python, TypeScript, SQL, JavaScript\\
+\textbf{Systems \& Runtime:} Linux, gRPC, UNIX domain sockets, concurrency, memory safety, low-latency service design\\
+\textbf{Algorithms \& Performance:} bitmasks, graph construction, constraint propagation, benchmarking, profiling, caching\\
+\textbf{Frameworks \& Tools:} Axum, Actix, Docker, Git, GitHub Actions, Redis, PostgreSQL, SQLite, libSQL, MongoDB
+
+\section*{Experience}
+\resumesubheading{Software Developer}{2020 -- Present}{Worldwide Discord Platform}{Rust, Python, TypeScript}
+\begin{itemize}
+  \item Built and maintained a production multi-service platform serving 50{,}000+ members and 2{,}000+ daily active users across Python, Rust, and TypeScript services.
+  \item Designed a three-layer architecture with Python handling the event gateway, Rust owning the performance-critical data and transaction path, and Next.js supporting admin workflows.
+  \item Moved critical backend logic into Rust because GC pauses were unacceptable on the financial path, improving predictability for latency-sensitive operations.
+  \item Introduced gRPC boundaries between services and optimized same-machine communication using UNIX domain sockets, reducing local IPC latency by roughly 60--70\%.
+  \item Evolved storage from raw JSON to MongoDB, Redis, PostgreSQL, and embedded libSQL based on concrete concurrency, integrity, and latency failures in production.
+  \item Built Rust-side caching and embedded libSQL execution paths to remove avoidable network round-trips and keep hot operations close to the process.
+\end{itemize}
+
+\section*{Projects}
+\resumesubheading{Sudoku Solver Research}{Active}{\href{https://github.com/drlove2002/sudoku_solver}{github.com/drlove2002/sudoku\_solver}}{Rust, Criterion, Algorithm Research}
+\begin{itemize}
+  \item Building a modular Sudoku-solving and benchmarking system in Rust to evaluate interchangeable solving components on a large real-world dataset of about 3 million puzzles.
+  \item Using minigrid-based constraint propagation, permutation generation, compatibility graph construction, and graph export for analysis instead of a single hardcoded solver path.
+  \item Treating the project as a research and benchmarking problem: compare solver combinations, measure behavior, and produce paper-quality technical documentation in LaTeX.
+\end{itemize}
+
+\resumesubheading{Pattern Pursuit}{2023}{\href{https://github.com/drlove2002/pattern_pursuit}{github.com/drlove2002/pattern\_pursuit}}{Rust, Actix, TypeScript, Redis}
+\begin{itemize}
+  \item Built an interactive prediction game using a Rust and Actix backend, TypeScript frontend, and Redis-backed real-time state.
+  \item Applied 5-gram statistical language modeling to drive prediction logic and adaptive gameplay behavior.
+\end{itemize}
+
+\section*{Education}
+\resumesubheading{M.Sc. in Computer Science}{Final Year}{University of Calcutta}{West Bengal, India}
+\vspace{0.15em}
+
+\resumesubheading{B.Sc. in Computer Science}{2020 -- 2023}{University of Calcutta}{West Bengal, India}
+
+\section*{Additional}
+\textbf{Interests:} systems programming, compilers, runtimes, distributed systems, performance engineering\\
+\textbf{Languages:} Bengali (Native), English (Fluent), Hindi (Intermediate), German (A1)
+
+\end{document}

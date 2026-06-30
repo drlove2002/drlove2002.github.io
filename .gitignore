@@ -5,3 +5,20 @@ node_modules/
 *.local
 .env*.local
 .vercel
+
+# direnv
+.direnv/
+
+# TypeScript
+tsconfig.tsbuildinfo
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+
+# Editor config
+src/content/writing/.obsidian/
+
+# AI agents
+.claude/
